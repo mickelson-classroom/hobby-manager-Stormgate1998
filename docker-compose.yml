@@ -1,0 +1,27 @@
+version: "3"
+services:
+  client:
+    build: .
+    # ports:
+    # - 0.0.0.0:3141:80
+  swag:
+    image: lscr.io/linuxserver/swag
+    container_name: swag
+    cap_add:
+      - NET_ADMIN
+    env_file:
+    - .env
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Denver
+      - URL=joshbarlowsite.duckdns.org
+      - VALIDATION=duckdns
+      - STAGING=true
+    volumes:
+      - /home/<your user here>/data/swag:/config
+      - ./default.conf:/config/nginx/site-confs/default.conf
+
+    ports:
+    - 0.0.0.0:3141:80
+    restart: unless-stopped
