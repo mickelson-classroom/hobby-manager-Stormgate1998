@@ -1,4 +1,6 @@
 name: Update home server containers
+env: 
+  DUCKDNSTOKEN: ${{ secrets.DUCKDNSTOKEN }}
 on: [push, workflow_dispatch]
 jobs:
   deploy-application:
