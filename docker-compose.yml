@@ -6,7 +6,7 @@ services:
     # - 0.0.0.0:3141:80
   swag:
     image: lscr.io/linuxserver/swag
-    container_name: swag
+    container_name: joshswag
     cap_add:
       - NET_ADMIN
     environment:
@@ -21,5 +21,5 @@ services:
       - ./default.conf:/config/nginx/site-confs/default.conf
 
     ports:
-    - 0.0.0.0:3141:419
+    - 0.0.0.0:3141:80
     restart: unless-stopped
