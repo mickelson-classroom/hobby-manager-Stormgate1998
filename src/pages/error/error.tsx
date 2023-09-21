@@ -10,9 +10,7 @@ export const ErrorPage = () => {
       
         <div>
           <h2 className="text-success">Click Button To Set Off Error</h2>
-          <ErrorBoundary
-        fallback={<h3 className="text-warning">You have encountered an error. Please go to home.</h3>}
-      ><button
+       <button
             className="btn btn-secondary my-3"
             onClick={() => {
                   throw new Error("This is a deliberate error.");
@@ -20,7 +18,6 @@ export const ErrorPage = () => {
           >
             Trigger Error
           </button>
-          </ErrorBoundary>
         </div>
       
     </div>

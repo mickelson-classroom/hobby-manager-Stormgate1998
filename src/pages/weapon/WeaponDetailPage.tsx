@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Navbar from "../NavBar";
 import { useParams } from "react-router-dom";
 import {Weapon} from "../../models/weapons";
 import { weapons } from "../../services/weaponService";
+import {WeaponContext, WeaponProvider} from "../../components/WeaponContext";
+
 export const WeaponDetailPage = () => {
   const { weaponId } = useParams();
  // const [weapons, setWeapons] = useState<Weapon[]>([]);
-
+ const {weapons, saveWeapons} = useContext(WeaponContext);
   const selectedWeapon = weapons.find((w) => w.id === weaponId);
 
   return (

@@ -1,16 +1,41 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Weapon } from "../../models/weapons";
 import { getWeapons } from "../../services/weaponService";
 import { Link } from "react-router-dom";
 import Navbar from "../NavBar";
 import ErrorBoundary from "../ErrorBoundary";
+import { WeaponContext } from "../../components/WeaponContext";
 
 export const Home = () => {
-  const [weapons, setWeapons] = useState<Weapon[]>([]);
+  const {weapons, saveWeapons} = useContext(WeaponContext);
+const [weapon, setWeapon] = useState({
+    id: '',
+    name: '',
+    material: '',
+    typeofDamage: '',
+    range: '',
+  });
 
-  useEffect(() => {
-    getWeapons().then((weapons) => setWeapons(weapons));
-  }, []);
+ 
+  const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
+    const { name, value } = e.target;
+    setWeapon({
+      ...weapon,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+    saveWeapons(weapon);
+    setWeapon({ 
+      id: "",
+      name: "",
+      material: "",
+      typeofDamage: "",
+      range: "",
+    });
+  };
   return (
     <>
     <Navbar/>
@@ -29,7 +54,68 @@ export const Home = () => {
           </Link>
         ))}
       </div>
+      <div className="container">
+      <h2>Weapon Form</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="name">Name:</label>
+          <input
+            type="text"
+            className="form-control"
+            id="name"
+            name="name"
+            value={weapon.name}
+            onChange={handleInputChange}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="material">Material:</label>
+          <input
+            type="text"
+            className="form-control"
+            id="material"
+            name="material"
+            value={weapon.material}
+            onChange={handleInputChange}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="typeofDamage">Type of Damage:</label>
+          <input
+            type="text"
+            className="form-control"
+            id="typeofDamage"
+            name="typeofDamage"
+            value={weapon.typeofDamage}
+            onChange={handleInputChange}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="range">Range:</label>
+          <input
+            type="text"
+            className="form-control"
+            id="range"
+            name="range"
+            value={weapon.range}
+            onChange={handleInputChange}
+          />
+        </div>
+
+        <button type="submit" className="btn btn-primary">
+          Submit
+        </button>
+      </form>
     </div>
+
+
+
+      </div>
+
+      
     </ErrorBoundary>
     </>
   );

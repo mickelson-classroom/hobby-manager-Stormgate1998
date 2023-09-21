@@ -5,8 +5,3 @@ export interface Weapon {
     typeofDamage: string;
     range: string;
 }
-export type WeaponContextType = {
-    weapons: Weapon[];
-    saveWeapons: (weapon: Weapon) => void;
-    //updateWeapons: (id: string) => void;
-}
