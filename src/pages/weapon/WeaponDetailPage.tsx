@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Navbar from "../NavBar";
 import { useParams } from "react-router-dom";
 import {Weapon} from "../../models/weapons";
 import { weapons } from "../../services/weaponService";
@@ -10,6 +11,7 @@ export const WeaponDetailPage = () => {
 
   return (
     <div>
+      <Navbar/>
       <h1 className="text-success">Weapon Detail Page</h1>
      {selectedWeapon &&
      <>

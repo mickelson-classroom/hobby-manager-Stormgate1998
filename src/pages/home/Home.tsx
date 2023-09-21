@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Weapon } from "../../models/weapons";
 import { getWeapons } from "../../services/weaponService";
 import { Link } from "react-router-dom";
+import Navbar from "../NavBar";
+import ErrorBoundary from "../ErrorBoundary";
 
 export const Home = () => {
   const [weapons, setWeapons] = useState<Weapon[]>([]);
@@ -10,6 +12,9 @@ export const Home = () => {
     getWeapons().then((weapons) => setWeapons(weapons));
   }, []);
   return (
+    <>
+    <Navbar/>
+    <ErrorBoundary fallback={<h3 className="text-warning">You created a problem. Please reload the page</h3>}>
     <div className="container">
       <h1 className="text-success">Home Page</h1>
       <div className="d-flex flex-wrap">
@@ -25,5 +30,7 @@ export const Home = () => {
         ))}
       </div>
     </div>
+    </ErrorBoundary>
+    </>
   );
 };
