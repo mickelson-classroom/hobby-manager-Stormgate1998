@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Weapon} from '../models/weapons';
 
 import { weapons } from '../services/weaponService';
+import { useEffect, useState } from 'react';
 
 //export const WeaponContext = React.createContext<WeaponContextType | null>(null);
 
@@ -50,12 +51,22 @@ const defaultWeapons: WeaponContext = {
   },
 };
 
+const weaponStorageKey = "storedWeapons";
+const storeWeaponsInLocalStorage = (weapons: Weapon[]) => {
+  localStorage.setItem(weaponStorageKey, JSON.stringify(weapons))
+}
+
+const getWeaponsInLocalStorage = (): Weapon[] =>{
+  const returnedWeapons = localStorage.getItem(weaponStorageKey);
+  return JSON.parse(returnedWeapons ?? "[]")
+}
 export const WeaponContext = React.createContext<WeaponContext>(defaultWeapons);
 
 
 export const WeaponProvider: React.FC<{children: React.ReactNode}> = ({children}) => {
-  const [weapons, setWeapons] = React.useState(defaultWeapons.weapons)
+  const [weapons, setWeapons] = useState<Weapon[]>(getWeaponsInLocalStorage())
 
+  useEffect 
   const saveWeapons = (weapon: Weapon) => {
     const newWeapon: Weapon = {
       id: (parseInt(weapons[weapons.length - 1].id) + 1).toString(),

@@ -19,7 +19,7 @@ services:
       - STAGING=false
     volumes:
       - /home/josh/data/swag:/config
-      - ./default.conf:/config/nginx/site-confs/swag-default.conf
+      - ./swag-default.conf:/config/nginx/site-confs/swag-default.conf
 
     ports:
     - 0.0.0.0:3141:80
