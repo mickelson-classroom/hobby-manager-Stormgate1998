@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Weapon} from '../models/weapons';
 
-import { weapons } from '../services/weaponService';
+import { getWeapons, weapons } from '../services/weaponService';
 import { useEffect, useState } from 'react';
 
 //export const WeaponContext = React.createContext<WeaponContextType | null>(null);
@@ -65,8 +65,22 @@ export const WeaponContext = React.createContext<WeaponContext>(defaultWeapons);
 
 export const WeaponProvider: React.FC<{children: React.ReactNode}> = ({children}) => {
   const [weapons, setWeapons] = useState<Weapon[]>(getWeaponsInLocalStorage())
+  console.log(weapons)
+  useEffect (() =>{
+    const storedWeapons = getWeaponsInLocalStorage();
+    if (storedWeapons.length > 0){
+      setWeapons(storedWeapons)
+    } else{
+      getWeapons().then((newWeapons) => setWeapons(newWeapons))
+    }
+  }, [])
 
-  useEffect 
+  useEffect(() => {
+    console.log("Actually updating the weapon list")
+    storeWeaponsInLocalStorage(weapons)
+  }, [weapons])
+
+
   const saveWeapons = (weapon: Weapon) => {
     const newWeapon: Weapon = {
       id: (parseInt(weapons[weapons.length - 1].id) + 1).toString(),
@@ -75,7 +89,7 @@ export const WeaponProvider: React.FC<{children: React.ReactNode}> = ({children}
       typeofDamage: weapon.typeofDamage,
       range: weapon.range
     }
-    setWeapons((weapons) => [...weapons, newWeapon])
+    setWeapons((newWeapons) => [...newWeapons, newWeapon])
   }
 
   return (
