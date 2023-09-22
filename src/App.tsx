@@ -9,20 +9,22 @@ export const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <ErrorBoundary fallback={<ErrorFeedback/>}><Home /></ErrorBoundary>,
+      element: <Home />,
     },
     {
       path: "/weapon/:weaponId",
-      element: <ErrorBoundary fallback={<ErrorFeedback/>}><WeaponDetailPage /></ErrorBoundary>,
+      element: <WeaponDetailPage />,
     },
     {
       path: "/error",
-      element: <ErrorBoundary fallback={<ErrorFeedback/>}><ErrorPage /></ErrorBoundary>,
+      element: <ErrorPage />,
     },
   ]);
   return (
+    <ErrorBoundary fallback={<ErrorFeedback/>}>
     <div className="App">
       <RouterProvider router={router} />
     </div>
+    </ErrorBoundary>
   );
 };

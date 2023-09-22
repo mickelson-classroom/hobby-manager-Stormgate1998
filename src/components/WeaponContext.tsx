@@ -35,8 +35,12 @@ const defaultWeapons: WeaponContext = {
     }
   ],
   saveWeapons: (weapon: Weapon) => {
+    const maxId = weapons.reduce((max, weapon) => {
+    const weaponId = parseInt(weapon.id);
+     return weaponId > max ? weaponId : max;
+    }, -1);
     const newWeapon: Weapon = {
-      id: (parseInt(weapons[weapons.length - 1].id) + 1).toString(),
+      id: (maxId + 1).toString(),
       name: weapon.name,
       material: weapon.material,
       typeofDamage: weapon.typeofDamage,

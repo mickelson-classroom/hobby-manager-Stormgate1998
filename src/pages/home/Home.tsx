@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Navbar from "../NavBar";
 import ErrorBoundary from "../ErrorBoundary";
 import { WeaponContext } from "../../components/WeaponContext";
-
+import Toast from "../../components/Toaster/Toast";
 export const Home = () => {
   const {weapons, saveWeapons} = useContext(WeaponContext);
 const [weapon, setWeapon] = useState({
@@ -55,7 +55,7 @@ const [weapon, setWeapon] = useState({
         ))}
       </div>
       <div className="container">
-      <h2>Weapon Form</h2>
+      <h2>New Weapon Form</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name">Name:</label>
@@ -110,12 +110,13 @@ const [weapon, setWeapon] = useState({
         </button>
       </form>
     </div>
+    <div className="container">
+      
+    </div>
 
 
 
       </div>
-
-      
     </ErrorBoundary>
     </>
   );
