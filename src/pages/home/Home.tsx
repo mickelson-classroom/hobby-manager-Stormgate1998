@@ -39,8 +39,7 @@ const [weapon, setWeapon] = useState({
   return (
     <>
     <Navbar/>
-    <ErrorBoundary fallback={<h3 className="text-warning">You created a problem. Please reload the page</h3>}>
-    <div className="container">
+      <div className="container">
       <h1 className="text-success">Home Page</h1>
       <div className="d-flex flex-wrap">
         {weapons.map((w) => (
@@ -117,7 +116,6 @@ const [weapon, setWeapon] = useState({
 
 
       </div>
-    </ErrorBoundary>
     </>
   );
 };

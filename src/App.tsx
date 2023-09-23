@@ -5,6 +5,7 @@ import { WeaponDetailPage } from "./pages/weapon/WeaponDetailPage";
 import { ErrorPage } from "./pages/error/error";
 import ErrorBoundary from "./pages/ErrorBoundary";
 import { ErrorFeedback } from "./pages/errorFeedback/errorFeedback";
+import {ToastPage} from "./pages/ToastPage"
 export const App = () => {
   const router = createBrowserRouter([
     {
@@ -18,6 +19,10 @@ export const App = () => {
     {
       path: "/error",
       element: <ErrorPage />,
+    },
+    {
+      path: "/toast",
+      element: <ToastPage />,
     },
   ]);
   return (

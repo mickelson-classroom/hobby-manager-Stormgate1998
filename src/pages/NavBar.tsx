@@ -18,6 +18,11 @@ const Navbar: React.FC<NavbarProps> = () => {
               <h3 className='text-primary'>Error Testing</h3>
             </Link>
           </div>
+          <div className="nav-item">
+            <Link to="/toast" className="nav-link">
+              <h3 className='text-primary'>The Toaster Oven</h3>
+            </Link>
+          </div>
       </div>
     </nav>
   );

@@ -1,4 +1,4 @@
-import "/Toast.css"
+import "./Toast.css"
 import React from "react"
 import {
   GhostIcon,
@@ -6,10 +6,8 @@ import {
   MagicIcon,
   CloseIcon
 } from "../Icons/Icons";
-import "/Toast.css"
-
 // Define the props type
-type ToastProps = {
+export interface ToastProps {
   message: string;
   type: 'ghost' | 'magic' | 'comment';
   onClose: () => void;

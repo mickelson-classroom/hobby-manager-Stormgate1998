@@ -10,45 +10,51 @@ interface ToastData {
 
 interface ToastListProps {
   data: ToastData[];
-  position: string;
-  removeToast: (id: number) => void;
+  position: string; // You can specify a more specific type if needed
+  removeToast: (id: number) => void; // Assuming removeToast takes an id parameter
 }
 
 const ToastList: React.FC<ToastListProps> = ({ data, position, removeToast }) => {
-  const listRef = useRef<HTMLDivElement | null>(null);
+  const listRef = useRef<HTMLDivElement | null>(null); // Specify the useRef type
+
+  const handleScrolling = (el: HTMLDivElement | null) => { // Specify the parameter type
+    const isTopPosition = ["top-left", "top-right"].includes(position);
+    if (isTopPosition) {
+      el?.scrollTo(0, el.scrollHeight);
+    } else {
+      el?.scrollTo(0, 0);
+    }
+  };
 
   useEffect(() => {
-    // Add any necessary logic here if needed
-  }, []);
+    handleScrolling(listRef.current);
+  }, [position, data]);
 
-  // Conditionally render the toast list based on data length
-  const toastList = data.map((toast) => {
-    // Check if toast.type is valid before rendering
-    if (["ghost", "magic", "comment"].includes(toast.type)) {
-      return (
-        <Toast
-          key={toast.id}
-          message={toast.message}
-          type={toast.type}
-          onClose={() => removeToast(toast.id)}
-        />
-      );
-    } else {
-      // Handle invalid toast types here, e.g., log an error
-      console.error(`Invalid toast type: ${toast.type}`);
-      return null; // Skip rendering the invalid toast
-    }
-  });
-
+  const sortedData = position.includes("bottom")
+    ? [...data].reverse()
+    : [...data];
+  
   return (
-    <div
-      className={`toast-list toast-list--${position}`}
-      aria-live="assertive"
-      ref={listRef}
-    >
-      {toastList}
-    </div>
+    <>
+    {data.length > 0 && (
+      <div
+        className={`toast-list toast-list--${position}`}
+        aria-live="assertive"
+        ref={listRef}
+      >
+        {sortedData.map((toast) => (
+          <Toast
+            key={toast.id}
+            message={toast.message}
+            type={toast.type}
+            onClose={() => removeToast(toast.id)}
+          />
+        ))}
+      </div>
+    )}
+    </>
   );
+  
 };
 
 export default ToastList;
