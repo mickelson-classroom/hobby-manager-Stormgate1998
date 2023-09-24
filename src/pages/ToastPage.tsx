@@ -99,21 +99,6 @@ export const ToastPage = () => {
         />
       </div>
 
-      <div className="app-row m-3">
-        <label htmlFor="position" className="m-2">Position</label>
-        <select
-          id="position"
-          value={position}
-          onChange={handlePositionChange}
-          className="m-2"
-        >
-          <option value="top-right">Top-right</option>
-          <option value="top-left">Top-left</option>
-          <option value="bottom-right">Bottom-right</option>
-          <option value="bottom-left">Bottom-left</option>
-        </select>
-      </div>
-
       <ToastList data={toasts} position={position} removeToast={removeToast} />
     </div>
   );
