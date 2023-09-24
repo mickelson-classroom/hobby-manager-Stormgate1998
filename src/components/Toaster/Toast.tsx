@@ -1,4 +1,4 @@
-import "./Toast.css"
+
 import React from "react"
 import {
   GhostIcon,
@@ -26,10 +26,10 @@ const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
   const toastIcon = iconMap[type] || null;
 
   return (
-     <div className={`toast toast--${type}`} role="alert">
+     <div className={`toast toast--${type} show`} role="alert">
       <div className="toast-message">
         {toastIcon && (
-          <div className="icon icon--lg icon--thumb">{toastIcon}</div>
+          <div className="icon icon--lg icon--thumb style={{ width: '20px', height: '20px' }}">{toastIcon}</div>
         )}
         <p>{message}</p>
       </div>

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Toast from "../components/Toaster/Toast"
 import ToastList from "../components/ToastList/ToastList";
-import "../components/Toaster/Toast.css"
 import Navbar from "./NavBar";
 interface Toast {
   id: number;
@@ -62,30 +61,31 @@ export const ToastPage = () => {
       <h1 className="app-title">React Toast Component</h1>
 
       <div className="app-row app-row--group">
-        <button className="btn btn-primary" onClick={() => showToast("A ghost message", "ghost")}>
+        <button className="btn btn-primary m-3 button-hover-animation" onClick={() => showToast("A ghost message", "ghost")}>
           Show Ghost Toast
         </button>
-        <button className="btn btn-primary" onClick={() => showToast("A magic message", "magic")}>
+        <button className="btn btn-primary m-3 button-hover-animation" onClick={() => showToast("A magic message", "magic")}>
           Show Magic Toast
         </button>
-        <button className="btn btn-primary" onClick={() => showToast("A comment message", "comment")}>
+        <button className="btn btn-primary m-3 button-hover-animation" onClick={() => showToast("A comment message", "comment")}>
           Show Comment Toast
         </button>
-        <button className="btn btn-primary" onClick={removeAllToasts}>Clear Toasts</button>
-        <button className="btn btn-primary" onClick={generateFiftyToasts}>Create Fifty Toasts</button>
+        <button className="btn btn-primary m-3 button-hover-animation" onClick={removeAllToasts}>Clear Toasts</button>
+        <button className="btn btn-primary m-3 button-hover-animation" onClick={generateFiftyToasts}>Create Fifty Toasts</button>
       </div>
 
-      <div className="app-row">
+      <div className="app-row m-3 ">
         <input
           id="toggleDuration"
           type="checkbox"
           checked={autoClose}
           onChange={handleAutoCloseChange}
+          className=""
         />
-        <label htmlFor="toggleDuration">Auto-dismiss?</label>
+        <label htmlFor="toggleDuration" className="m-2">Auto-dismiss?</label>
       </div>
 
-      <div className="app-row">
+      <div className="app-row m-3 ">
         <label htmlFor="duration">Duration (seconds)</label>
         <input
           id="duration"
@@ -95,15 +95,17 @@ export const ToastPage = () => {
           value={autoCloseDuration}
           onChange={handleDurationChange}
           disabled={!autoClose}
+          className="form-control"
         />
       </div>
 
-      <div className="app-row">
-        <label htmlFor="position">Position</label>
+      <div className="app-row m-3">
+        <label htmlFor="position" className="m-2">Position</label>
         <select
           id="position"
           value={position}
           onChange={handlePositionChange}
+          className="m-2"
         >
           <option value="top-right">Top-right</option>
           <option value="top-left">Top-left</option>
