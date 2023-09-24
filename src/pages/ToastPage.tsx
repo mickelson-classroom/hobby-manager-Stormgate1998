@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Toast from "../components/Toaster/Toast"
 import ToastList from "../components/ToastList/ToastList";
+import "../components/Toaster/Toast.css"
+import Navbar from "./NavBar";
 interface Toast {
   id: number;
   message: string;
@@ -41,7 +43,11 @@ export const ToastPage = () => {
     setAutoClose((prevAutoClose) => !prevAutoClose);
     removeAllToasts();
   };
-
+  const generateFiftyToasts = () => {
+    for(var i=0; i < 50; i++ ){
+      showToast("Message " + i, "magic")
+    }
+  }
   const handleDurationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAutoCloseDuration(Number(event.target.value));
   };
@@ -52,19 +58,21 @@ export const ToastPage = () => {
 
   return (
       <div className="app">
+        <Navbar/>
       <h1 className="app-title">React Toast Component</h1>
 
       <div className="app-row app-row--group">
-        <button onClick={() => showToast("A success message", "ghost")}>
-          Show Success Toast
+        <button className="btn btn-primary" onClick={() => showToast("A ghost message", "ghost")}>
+          Show Ghost Toast
         </button>
-        <button onClick={() => showToast("A failure message", "magic")}>
-          Show Error Toast
+        <button className="btn btn-primary" onClick={() => showToast("A magic message", "magic")}>
+          Show Magic Toast
         </button>
-        <button onClick={() => showToast("A warning message", "comment")}>
-          Show Warning Toast
+        <button className="btn btn-primary" onClick={() => showToast("A comment message", "comment")}>
+          Show Comment Toast
         </button>
-        <button onClick={removeAllToasts}>Clear Toasts</button>
+        <button className="btn btn-primary" onClick={removeAllToasts}>Clear Toasts</button>
+        <button className="btn btn-primary" onClick={generateFiftyToasts}>Create Fifty Toasts</button>
       </div>
 
       <div className="app-row">

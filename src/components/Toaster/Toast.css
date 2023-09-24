@@ -1,7 +1,7 @@
 :root {
-    --toast-success-hue: 150;
-    --toast-failure-hue: 20;
-    --toast-warning-hue: 205;
+    --toast-ghost-hue: 150;
+    --toast-magic-hue: 20;
+    --toast-comment-hue: 205;
     --toast-padding: 1.5em;
     --toast-margin: 0.5em;
     --toast-bg-color-fallback: hsl(var(--secondary-hue) 15% 100%);
@@ -52,29 +52,29 @@
 }
 
 
-.toast--success {
-    color: hsl(var(--toast-success-hue) 97% 3%);
-    background-color: hsl(var(--toast-success-hue) 98% 99%);
+.toast--ghost {
+    color: hsl(var(--toast-ghost-hue) 97% 3%);
+    background-color: hsl(var(--toast-ghost-hue) 98% 99%);
 }
 
-.toast--success .icon--thumb {
-    color: hsl(var(--toast-success-hue) 90% 40%);
+.toast--ghost .icon--thumb {
+    color: hsl(var(--toast-ghost-hue) 90% 40%);
 }
 
-.toast--failure {
-    color: hsl(var(--toast-failure-hue) 97% 3%);
-    background-color: hsl(var(--toast-failure-hue) 98% 99%);
+.toast--magic {
+    color: hsl(var(--toast-magic-hue) 97% 3%);
+    background-color: hsl(var(--toast-magic-hue) 98% 99%);
 }
 
-.toast--failure .icon--thumb {
-    color: hsl(var(--toast-failure-hue) 90% 40%);
+.toast--magic .icon--thumb {
+    color: hsl(var(--toast-magic-hue) 90% 40%);
 }
 
-.toast--warning {
-    color: hsl(var(--toast-warning-hue) 97% 3%);
-    background-color: hsl(var(--toast-warning-hue) 98% 99%);
+.toast--comment {
+    color: hsl(var(--toast-comment-hue) 97% 3%);
+    background-color: hsl(var(--toast-comment-hue) 98% 99%);
 }
 
-.toast--warning .icon--thumb {
-    color: hsl(var(--toast-warning-hue) 90% 40%);
+.toast--comment.icon--thumb {
+    color: hsl(var(--toast-comment-hue) 90% 40%);
 }

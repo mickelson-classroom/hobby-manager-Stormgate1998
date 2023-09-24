@@ -104,7 +104,7 @@ const [weapon, setWeapon] = useState({
           />
         </div>
 
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary button-hover-animation">
           Submit
         </button>
       </form>

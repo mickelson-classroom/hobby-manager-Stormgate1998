@@ -6,7 +6,7 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = () => {
   return (
-    <nav className="navbar">
+    <nav className="navbar animated-fade-in">
       <div className="container">
           <div className="nav-item">
             <Link to="/" className="nav-link">

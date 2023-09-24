@@ -4,3 +4,29 @@ $tertiary: #880099;
 $success: #880099;
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
+
+.animated-fade-in {
+    opacity: 0;
+    animation: fadeIn 5s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.button-hover-animation {
+    transition: all .5s ease-in-out;
+}
+
+.button-hover-animation:hover {
+    /* Scale the button by 110% on hover */
+    background-color: $secondary;
+    /* Change the background color on hover */
+    /* Change the text color on hover */
+}

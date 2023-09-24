@@ -17,9 +17,9 @@ export interface ToastProps {
 const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
   // Define the icon mapping
   const iconMap: Record<string, React.ReactNode> = {
-    success: <MagicIcon />,
-    failure: <GhostIcon />,
-    warning: <CommentIcon />,
+    ghost: <GhostIcon />,
+    magic: <MagicIcon />,
+    comment: <CommentIcon />,
   };
 
   // Get the corresponding icon or null if not found
