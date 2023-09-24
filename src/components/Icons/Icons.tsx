@@ -1,5 +1,5 @@
 import React from "react";
-import "./Icons.css";
+import "./assets/custom.scss";
 
 export const MagicIcon = () => {
     return(
