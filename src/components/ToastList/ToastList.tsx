@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from "react";
 import Toast from "../Toaster/Toast";
-import "./ToastList.css";
 
 interface ToastData {
   id: number;
