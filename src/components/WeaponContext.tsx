@@ -9,6 +9,8 @@ import { useEffect, useState } from 'react';
 interface WeaponContext {
   weapons: Weapon[];
   saveWeapons: (weapon: Weapon) => void;
+  updateWeapons: (weapon: Weapon) => void;
+  deleteWeapons: (weapon: Weapon) => void;
 }
 
 const defaultWeapons: WeaponContext = {
@@ -49,6 +51,12 @@ const defaultWeapons: WeaponContext = {
     }
     defaultWeapons.weapons = [...defaultWeapons.weapons, newWeapon]
   },
+  deleteWeapons(weapon) {
+    defaultWeapons.weapons
+  },
+  updateWeapons(weapon) {
+    defaultWeapons.weapons
+  }
 };
 
 const weaponStorageKey = "storedWeapons";
@@ -92,11 +100,25 @@ export const WeaponProvider: React.FC<{children: React.ReactNode}> = ({children}
     setWeapons((newWeapons) => [...newWeapons, newWeapon])
   }
 
+  const updateWeapons = (weapon: Weapon) => {
+    setWeapons((oldWeapons) => [
+      weapon, 
+      ...oldWeapons.filter( (w) => w.id !== weapon.id)
+    ])
+  }
+
+  const deleteWeapons = (weapon: Weapon) => {
+    const newWeapons = weapons.filter(w => w.id !== weapon.id)
+    setWeapons(newWeapons)
+  }
+
   return (
     <WeaponContext.Provider
         value={{
           weapons,
-          saveWeapons
+          saveWeapons,
+          updateWeapons,
+          deleteWeapons
         }}
         >{children}</WeaponContext.Provider>
   )

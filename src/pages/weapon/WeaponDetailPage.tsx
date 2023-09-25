@@ -8,7 +8,7 @@ import {WeaponContext, WeaponProvider} from "../../components/WeaponContext";
 export const WeaponDetailPage = () => {
   const { weaponId } = useParams();
  // const [weapons, setWeapons] = useState<Weapon[]>([]);
- const {weapons, saveWeapons} = useContext(WeaponContext);
+ const {weapons, saveWeapons, updateWeapons, deleteWeapons} = useContext(WeaponContext);
   const selectedWeapon = weapons.find((w) => w.id === weaponId);
 
   return (
