@@ -57,7 +57,7 @@ const [weapon, setWeapon] = useState({
       <h2>New Weapon Form</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="name">Name:</label>
+          <label htmlFor="name" className="text-purple">Name:</label>
           <input
             type="text"
             className="form-control"
