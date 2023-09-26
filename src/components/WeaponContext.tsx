@@ -10,7 +10,7 @@ interface WeaponContext {
   weapons: Weapon[];
   saveWeapons: (weapon: Weapon) => void;
   updateWeapons: (weapon: Weapon) => void;
-  deleteWeapons: (weapon: Weapon) => void;
+  deleteWeapons: (id: string) => void;
 }
 
 const defaultWeapons: WeaponContext = {
@@ -51,11 +51,9 @@ const defaultWeapons: WeaponContext = {
     }
     defaultWeapons.weapons = [...defaultWeapons.weapons, newWeapon]
   },
-  deleteWeapons(weapon) {
-    defaultWeapons.weapons
+  deleteWeapons(id: string) {
   },
   updateWeapons(weapon) {
-    defaultWeapons.weapons
   }
 };
 
@@ -91,7 +89,7 @@ export const WeaponProvider: React.FC<{children: React.ReactNode}> = ({children}
 
   const saveWeapons = (weapon: Weapon) => {
     const newWeapon: Weapon = {
-      id: (parseInt(weapons[weapons.length - 1].id) + 1).toString(),
+      id: (Date.now).toString(),
       name: weapon.name,
       material: weapon.material,
       typeofDamage: weapon.typeofDamage,
@@ -107,8 +105,8 @@ export const WeaponProvider: React.FC<{children: React.ReactNode}> = ({children}
     ])
   }
 
-  const deleteWeapons = (weapon: Weapon) => {
-    const newWeapons = weapons.filter(w => w.id !== weapon.id)
+  const deleteWeapons = (id: string) => {
+    const newWeapons = weapons.filter(w => w.id !== id)
     setWeapons(newWeapons)
   }
 
