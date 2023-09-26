@@ -7,7 +7,7 @@ $success: #880099;
 
 .animated-fade-in {
     opacity: 0;
-    animation: fadeIn 5s ease-in-out forwards;
+    animation: fadeIn 3s ease-in-out forwards;
 }
 
 @keyframes fadeIn {
@@ -29,6 +29,21 @@ $success: #880099;
     background-color: $secondary;
     /* Change the background color on hover */
     /* Change the text color on hover */
+}
+
+.logo {
+    height: 6em;
+    padding: 1.5em;
+    will-change: filter;
+    transition: filter 300ms;
+}
+
+.logo:hover {
+    filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo.react:hover {
+    filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
   :root {
