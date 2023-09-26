@@ -23,11 +23,14 @@ export const WeaponDetailPage = () => {
     e.preventDefault();
     if(weapon.material === ''){
       weapon.material = weapons.find(w => w.id === weapon.id)?.material ?? ""
-    }else if(weapon.name === ''){
+    }
+    if(weapon.name === ''){
       weapon.name = weapons.find(w => w.id === weapon.id)?.name ?? ""
-    }else if(weapon.range === ''){
+    }
+    if(weapon.range === ''){
       weapon.range = weapons.find(w => w.id === weapon.id)?.range ?? ""
-    }else if(weapon.typeofDamage === ''){
+    }
+    if(weapon.typeofDamage === ''){
       weapon.typeofDamage = weapons.find(w => w.id === weapon.id)?.typeofDamage ?? ""
     }
 
