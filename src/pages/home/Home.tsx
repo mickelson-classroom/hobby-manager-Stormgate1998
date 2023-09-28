@@ -6,8 +6,14 @@ import Navbar from "../NavBar";
 import ErrorBoundary from "../ErrorBoundary";
 import { WeaponContext } from "../../components/WeaponContext";
 import Toast from "../../components/Toaster/Toast";
+import { useAppDispatch, useAppSelector } from "../../features/hooks";
+import { saveWeapons } from "../../features/weapon-slice";
 export const Home = () => {
-  const {weapons, saveWeapons} = useContext(WeaponContext);
+  const weapons =  useAppSelector((state) => state.weapon);
+  const dispatch = useAppDispatch();
+  const saveNewWeapon = (e: { target: Weapon; }) => {
+    dispatch(saveWeapons(e.target))
+  }
 const [weapon, setWeapon] = useState({
     id: '',
     name: '',
@@ -15,6 +21,8 @@ const [weapon, setWeapon] = useState({
     typeofDamage: '',
     range: '',
   });
+
+
 
  
   const handleInputChange = (e: { target: { name: string; value: string; }; }) => {
@@ -27,7 +35,15 @@ const [weapon, setWeapon] = useState({
 
   const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    saveWeapons(weapon);
+
+     const newWeapon: Weapon = {
+        id: weapon.id,
+        name: weapon.name,
+        material: weapon.material,
+        typeofDamage: weapon.typeofDamage,
+        range: weapon.range,
+    };
+    saveNewWeapon({target: newWeapon});
     setWeapon({ 
       id: "",
       name: "",
@@ -42,7 +58,7 @@ const [weapon, setWeapon] = useState({
       <div className="container">
       <h1 className="text-success">Home Page</h1>
       <div className="d-flex flex-wrap">
-        {weapons.map((w) => (
+        {weapons.weapons.map((w) => (
           <Link key={w.id} className="card m-3" to={`/weapon/${w.id}`}>
             <div className="card-body">
               <h5 className="card-title text-primary">{w.name}</h5>

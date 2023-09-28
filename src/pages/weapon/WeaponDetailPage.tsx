@@ -5,6 +5,8 @@ import {Weapon} from "../../models/weapons";
 import { weapons } from "../../services/weaponService";
 import {WeaponContext, WeaponProvider} from "../../components/WeaponContext";
 
+import { useAppDispatch, useAppSelector } from "../../features/hooks";
+import { updateWeapons, deleteWeapons} from "../../features/weapon-slice";
 export const WeaponDetailPage = () => {
   const { weaponId } = useParams();
   const [isEditing, SetisEditing] = useState(false);
@@ -15,26 +17,44 @@ export const WeaponDetailPage = () => {
     typeofDamage: '',
     range: '',
   });
- const {weapons, updateWeapons, deleteWeapons} = useContext(WeaponContext);
-  const selectedWeapon = weapons.find((w) => w.id === weaponId);
+  const weapons =  useAppSelector((state) => state.weapon);
+  const dispatch = useAppDispatch();
+  const changeWeapon = (e: { target: {id: string,
+    name: string,
+    material: string,
+    typeofDamage: string,
+    range: string
+  } }) => {
+     const newWeapon: Weapon = {
+        id: e.target.id,
+        name: e.target.name,
+        material: e.target.material,
+        typeofDamage: e.target.typeofDamage,
+        range: e.target.range,
+      }
+    dispatch(updateWeapons(newWeapon))
+  }
+ const {deleteWeapons} = useContext(WeaponContext);
+  const selectedWeapon = weapons.weapons.find((w) => w.id === weaponId);
 
 
   const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     if(weapon.material === ''){
-      weapon.material = weapons.find(w => w.id === weapon.id)?.material ?? ""
+      weapon.material = weapons.weapons.find(w => w.id === weapon.id)?.material ?? ""
     }
     if(weapon.name === ''){
-      weapon.name = weapons.find(w => w.id === weapon.id)?.name ?? ""
+      weapon.name = weapons.weapons.find(w => w.id === weapon.id)?.name ?? ""
     }
     if(weapon.range === ''){
-      weapon.range = weapons.find(w => w.id === weapon.id)?.range ?? ""
+      weapon.range = weapons.weapons.find(w => w.id === weapon.id)?.range ?? ""
     }
     if(weapon.typeofDamage === ''){
-      weapon.typeofDamage = weapons.find(w => w.id === weapon.id)?.typeofDamage ?? ""
+      weapon.typeofDamage = weapons.weapons.find(w => w.id === weapon.id)?.typeofDamage ?? ""
     }
 
-    updateWeapons(weapon)
+
+    changeWeapon({target: {id: weapon.id, name: weapon.name, material: weapon.material, range: weapon.range, typeofDamage: weapon.typeofDamage }})
     SetisEditing(false)
   };
   const handleInputChange = (e: { target: { name: string; value: string; }; }) => {
