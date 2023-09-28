@@ -2,45 +2,44 @@ import React, { useState } from "react";
 import Toast from "../components/Toaster/Toast"
 import ToastList from "../components/ToastList/ToastList";
 import Navbar from "./NavBar";
-interface Toast {
-  id: number;
-  message: string;
-  type: "ghost" | "magic" | "comment";
-}
-
+import { useAppDispatch, useAppSelector } from "../features/hooks";
+import { addToast, removeAllToasts, removeToast } from "../features/toast-slice";
+import { ToastObj } from "../components/Toaster/Toast";
 export const ToastPage = () => {
-  const [toasts, setToasts] = useState<Toast[]>([]); // Explicitly type the state as an array of Toast objects
+  const toasts = useAppSelector((state) => state.toast)
+ const dispatch = useAppDispatch();
+  // Explicitly type the state as an array of Toast objects
   const [autoClose, setAutoClose] = useState(true);
   const [autoCloseDuration, setAutoCloseDuration] = useState(5);
   const [position, setPosition] = useState("bottom-right");
 
   const showToast = (message: string, type: "ghost" | "magic" | "comment") => {
-    const toast: Toast = {
-      id: Date.now(),
+    const toast: ToastObj = {
+      id: Date.now().toString(),
       message,
       type,
     };
 
-    setToasts((prevToasts) => [...prevToasts, toast]);
+    dispatch(addToast(toast));
     
     if (autoClose) {
       setTimeout(() => {
-        removeToast(toast.id);
+        removeCertainToast(toast.id);
       }, autoCloseDuration * 1000);
     }
   };
 
-  const removeToast = (id: number) => {
-    setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id));
+  const removeCertainToast = (id: string) => {
+    dispatch(removeToast(id))
   };
 
-  const removeAllToasts = () => {
-    setToasts([]);
+  const removeAllToast = () => {
+   dispatch(removeAllToasts());
   };
 
   const handleAutoCloseChange = () => {
     setAutoClose((prevAutoClose) => !prevAutoClose);
-    removeAllToasts();
+    removeAllToast();
   };
   const generateFiftyToasts = () => {
     for(var i=0; i < 50; i++ ){
@@ -70,7 +69,7 @@ export const ToastPage = () => {
         <button className="btn btn-primary m-3 button-hover-animation" onClick={() => showToast("A comment message", "comment")}>
           Show Comment Toast
         </button>
-        <button className="btn btn-primary m-3 button-hover-animation" onClick={removeAllToasts}>Clear Toasts</button>
+        <button className="btn btn-primary m-3 button-hover-animation" onClick={removeAllToast}>Clear Toasts</button>
         <button className="btn btn-primary m-3 button-hover-animation" onClick={generateFiftyToasts}>Create Fifty Toasts</button>
       </div>
 
@@ -99,7 +98,7 @@ export const ToastPage = () => {
         />
       </div>
 
-      <ToastList data={toasts} position={position} removeToast={removeToast} />
+      <ToastList data={toasts.toasts} position={position} removeToast={removeCertainToast} />
     </div>
   );
 };

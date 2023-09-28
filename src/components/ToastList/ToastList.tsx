@@ -1,16 +1,11 @@
 import React, { useRef, useEffect } from "react";
 import Toast from "../Toaster/Toast";
-
-interface ToastData {
-  id: number;
-  message: string;
-  type: "ghost" | "magic" | "comment";
-}
+import { ToastObj } from "../Toaster/Toast";
 
 interface ToastListProps {
-  data: ToastData[];
+  data: ToastObj[];
   position: string; // You can specify a more specific type if needed
-  removeToast: (id: number) => void; // Assuming removeToast takes an id parameter
+  removeToast: (id: string) => void; // Assuming removeToast takes an id parameter
 }
 
 const ToastList: React.FC<ToastListProps> = ({ data, position, removeToast }) => {
@@ -43,7 +38,7 @@ const ToastList: React.FC<ToastListProps> = ({ data, position, removeToast }) =>
       >
         {sortedData.map((toast) => (
           <Toast
-            key={toast.id}
+            id={toast.id}
             message={toast.message}
             type={toast.type}
             onClose={() => removeToast(toast.id)}

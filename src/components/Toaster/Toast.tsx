@@ -8,19 +8,26 @@ import {
 } from "../Icons/Icons";
 // Define the props type
 export interface ToastProps {
+  id: string;
   message: string;
   type: 'ghost' | 'magic' | 'comment';
   onClose: () => void;
 };
 
+export interface ToastObj {
+  id: string;
+  message: string;
+  type: 'ghost' | 'magic' | 'comment';
+}
+
 // Create the Toast component
-const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
+const Toast: React.FC<ToastProps> = ({id, message, type, onClose }) => {
   // Define the icon mapping
   const iconMap: Record<string, React.ReactNode> = {
     ghost: <GhostIcon />,
     magic: <MagicIcon />,
     comment: <CommentIcon />,
-  };
+  }
 
   // Get the corresponding icon or null if not found
   const toastIcon = iconMap[type] || null;
