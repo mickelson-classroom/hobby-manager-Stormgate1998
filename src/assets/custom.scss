@@ -127,3 +127,39 @@ $success: #880099;
       width: 1.5em;
       height: 1.5em;
   }
+
+  .purple-icon {
+      fill: purple;
+  }
+
+  .green-icon {
+      fill: green;
+  }
+
+  .red-icon {
+      fill: red;
+  }
+/* Add these styles to your existing stylesheet or create a new one */
+
+.app {
+    display: flex;
+    flex-direction: column;
+}
+
+.app-container {
+    flex-direction: column;
+    /* Navbar at the top by default */
+    display: flex;
+}
+
+.app-content {
+    flex-grow: 1;
+}
+
+/* Media query for mobile */
+@media (max-width: 767px) {
+    .app-container {
+        flex-direction: column-reverse;
+        /* Navbar at the bottom on mobile */
+    }
+}

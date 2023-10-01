@@ -30,16 +30,10 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ setBase64Image }) 
 
   return (
     <>
-      <div>
-        <input type="file" id="fileInput" accept=".png" onChange={handleFileSelect} />
-        <img id="base64Image" alt="Base64 Image" style={{ maxWidth: '300px' }} src={base64Image} />
-
-        <textarea
-          id="base64Textarea"
-          readOnly
-          style={{ width: '100%', height: '100px' }}
-          value={base64Textarea}
-        />
+      <div className="">
+        <input className="form-control m-3" type="file" id="fileInput" accept=".png" onChange={handleFileSelect} />
+       {base64Image && <img id="base64Image" alt="Base64 Image" style={{ maxWidth: '300px' }} src={base64Image} />
+}
       </div>
     </>
   );

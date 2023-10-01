@@ -54,10 +54,16 @@ export const ToastPage = () => {
     setPosition(event.target.value);
   };
 
-  return (
-      <div className="app">
-        <Navbar/>
-      <h1 className="app-title">React Toast Component</h1>
+  return (  
+  
+    <div className="app">
+      <div className="app-container">
+        {/* Navbar */}
+        <Navbar />
+
+        <div className="app-content">
+          <h1 className="app-title">Toast Component</h1>
+
 
       <div className="app-row app-row--group">
         <button className="btn btn-primary m-3 button-hover-animation" onClick={() => showToast("A ghost message", "ghost")}>
@@ -73,16 +79,18 @@ export const ToastPage = () => {
         <button className="btn btn-primary m-3 button-hover-animation" onClick={generateFiftyToasts}>Create Fifty Toasts</button>
       </div>
 
-      <div className="app-row m-3 ">
-        <input
-          id="toggleDuration"
-          type="checkbox"
-          checked={autoClose}
-          onChange={handleAutoCloseChange}
-          className=""
-        />
-        <label htmlFor="toggleDuration" className="m-2">Auto-dismiss?</label>
-      </div>
+          <div className="app-row m-3 ">
+            <input
+              id="toggleDuration"
+              type="checkbox"
+              checked={autoClose}
+              onChange={handleAutoCloseChange}
+              className=""
+            />
+            <label htmlFor="toggleDuration" className="m-2">
+              Auto-dismiss?
+            </label>
+          </div>
 
       <div className="app-row m-3 ">
         <label htmlFor="duration">Duration (seconds)</label>
@@ -97,8 +105,9 @@ export const ToastPage = () => {
           className="form-control"
         />
       </div>
-
-      <ToastList data={toasts.toasts} position={position} removeToast={removeCertainToast} />
+ <ToastList data={toasts.toasts} position={position} removeToast={removeCertainToast} />
+        </div>
+      </div>
     </div>
   );
 };
