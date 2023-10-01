@@ -21,6 +21,7 @@ const defaultWeapons: WeaponContext = {
       material: "Steel",
       typeofDamage: "Slashing",
       range: "Melee",
+      imgUrl: "",
     },
     {
       id: "2",
@@ -28,6 +29,7 @@ const defaultWeapons: WeaponContext = {
       material: "Wood and String",
       typeofDamage: "Piercing",
       range: "Ranged",
+      imgUrl: "",
     },
     {
       id: "3",
@@ -35,6 +37,7 @@ const defaultWeapons: WeaponContext = {
       material: "Iron",
       typeofDamage: "Blunt",
       range: "Melee",
+      imgUrl: "",
     }
   ],
   saveWeapons: (weapon: Weapon) => {
@@ -47,7 +50,8 @@ const defaultWeapons: WeaponContext = {
       name: weapon.name,
       material: weapon.material,
       typeofDamage: weapon.typeofDamage,
-      range: weapon.range
+      range: weapon.range,
+      imgUrl: weapon.imgUrl
     }
     defaultWeapons.weapons = [...defaultWeapons.weapons, newWeapon]
   },
@@ -93,7 +97,8 @@ export const WeaponProvider: React.FC<{children: React.ReactNode}> = ({children}
       name: weapon.name,
       material: weapon.material,
       typeofDamage: weapon.typeofDamage,
-      range: weapon.range
+      range: weapon.range,
+      imgUrl: weapon.imgUrl
     }
     setWeapons((newWeapons) => [...newWeapons, newWeapon])
   }

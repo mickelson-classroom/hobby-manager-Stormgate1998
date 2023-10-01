@@ -12,6 +12,7 @@ export async function getWeapons(){
     material: "Steel",
     typeofDamage: "Slashing",
     range: "Melee",
+    imgUrl: "",
   },
   {
     id: "2",
@@ -19,6 +20,7 @@ export async function getWeapons(){
     material: "Wood and String",
     typeofDamage: "Piercing",
     range: "Ranged",
+    imgUrl: "",
   },
   {
     id: "3",
@@ -26,5 +28,6 @@ export async function getWeapons(){
     material: "Iron",
     typeofDamage: "Blunt",
     range: "Melee",
+    imgUrl: "",
   }
 ]

@@ -7,23 +7,34 @@ import {WeaponContext, WeaponProvider} from "../../components/WeaponContext";
 
 import { useAppDispatch, useAppSelector } from "../../features/hooks";
 import { updateWeapons, deleteWeapons} from "../../features/weapon-slice";
+import { ImageUploader } from "../../components/components/ImageUploader";
 export const WeaponDetailPage = () => {
   const { weaponId } = useParams();
   const [isEditing, SetisEditing] = useState(false);
+  const [myimgUrl, setImgUrl] = useState("");
   const [weapon, setWeapon] = useState({
     id: weaponId || "",
     name: '',
     material: '',
     typeofDamage: '',
     range: '',
+    imgUrl: '',
   });
+
+
+  useEffect(() => {
+    console.log(weapon.imgUrl)
+  },[weapon.imgUrl])
+
+
   const weapons =  useAppSelector((state) => state.weapon);
   const dispatch = useAppDispatch();
   const changeWeapon = (e: { target: {id: string,
     name: string,
     material: string,
     typeofDamage: string,
-    range: string
+    range: string,
+    imgUrl: string,
   } }) => {
      const newWeapon: Weapon = {
         id: e.target.id,
@@ -31,6 +42,7 @@ export const WeaponDetailPage = () => {
         material: e.target.material,
         typeofDamage: e.target.typeofDamage,
         range: e.target.range,
+        imgUrl: myimgUrl,
       }
     dispatch(updateWeapons(newWeapon))
   }
@@ -52,9 +64,13 @@ export const WeaponDetailPage = () => {
     if(weapon.typeofDamage === ''){
       weapon.typeofDamage = weapons.weapons.find(w => w.id === weapon.id)?.typeofDamage ?? ""
     }
+    if(myimgUrl === ''){
+      setImgUrl(weapons.weapons.find(w => w.id === weapon.id)?.imgUrl ?? "")
+      weapon.imgUrl = myimgUrl;
+    }
 
 
-    changeWeapon({target: {id: weapon.id, name: weapon.name, material: weapon.material, range: weapon.range, typeofDamage: weapon.typeofDamage }})
+    changeWeapon({target: {id: weapon.id, name: weapon.name, material: weapon.material, range: weapon.range, typeofDamage: weapon.typeofDamage, imgUrl: weapon.imgUrl}})
     SetisEditing(false)
   };
   const handleInputChange = (e: { target: { name: string; value: string; }; }) => {
@@ -64,7 +80,9 @@ export const WeaponDetailPage = () => {
       [name]: value,
     });
   };
-
+  useEffect(()=>{
+ console.log(myimgUrl)
+  },[myimgUrl])
   return (
     <div>
       <Navbar/>
@@ -87,6 +105,10 @@ export const WeaponDetailPage = () => {
       <div className="col-lg-3 col-md-4 col-sm-6 col-12 m-3 container border rounded-3"> 
       <div className="h2 text-gray">Range:</div>
       <div className="h3 text-primary"> {selectedWeapon?.range}
+       </div>
+       </div>
+      <div className="col-lg-3 col-md-4 col-sm-6 col-12 m-3 container border rounded-3"> 
+      <img src={selectedWeapon.imgUrl} className="img-fluid" alt="Selected Weapon" />
        </div>
        </div>
         {isEditing ===true ? (
@@ -141,6 +163,10 @@ export const WeaponDetailPage = () => {
           />
         </div>
 
+        <div className="form-group">
+           <ImageUploader setBase64Image={setImgUrl}></ImageUploader>
+        </div>
+
         <button type="submit" className="btn btn-primary button-hover-animation m-3">
           Submit
         </button>
@@ -164,7 +190,6 @@ export const WeaponDetailPage = () => {
         )
         }
       
-       </div>
           </>
 
       }

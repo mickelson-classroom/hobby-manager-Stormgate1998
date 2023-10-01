@@ -4,4 +4,5 @@ export interface Weapon {
     material: string;
     typeofDamage: string;
     range: string;
+    imgUrl: string;
 }
