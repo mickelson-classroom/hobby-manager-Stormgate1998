@@ -4,6 +4,7 @@ services:
     build: .
     # ports:
     # - 0.0.0.0:3141:80
+
   swag:
     image: lscr.io/linuxserver/swag
     container_name: joshswag
@@ -15,12 +16,20 @@ services:
       - TZ=America/Denver
       - URL=joshbarlowsite.duckdns.org
       - VALIDATION=duckdns
-      - DUCKDNSTOKEN = ${DUCKDNSTOKEN}
+      - DUCKDNSTOKEN=${DUCKDNSTOKEN}
       - STAGING=false
     volumes:
       - /home/josh/data/swag:/config
       - ./swag-default.conf:/config/nginx/site-confs/default.conf
-
     ports:
-    - 0.0.0.0:3141:443
+      - 0.0.0.0:3141:443
     restart: unless-stopped
+
+  storage-api:
+    image: jalapenojosh/storage-api-stormgate1998:latest
+    container_name: josh-storage-api
+    volumes:
+      - storage-api-data:/app/data  # Use a volume to persist data
+
+volumes:
+  storage-api-data:
