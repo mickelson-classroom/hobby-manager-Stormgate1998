@@ -29,7 +29,6 @@ services:
     image: jalapenojosh/storage-api-stormgate1998:latest
     container_name: josh-storage-api
     volumes:
-      - storage-api-data:/app/data  # Use a volume to persist data
-
-volumes:
-  storage-api-data:
+      - - /home/josh/data/apiStorage:/app/storage
+    ports:
+      - 0.0.0.0:2319:443 
