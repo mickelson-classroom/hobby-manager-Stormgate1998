@@ -29,6 +29,6 @@ services:
     image: jalapenojosh/storage-api-stormgate1998:latest
     container_name: josh-storage-api
     volumes:
-      - - /home/josh/data/apiStorage:/app/storage
+      - /home/josh/data/apiStorage:/app/storage
     ports:
       - 0.0.0.0:2319:443 
