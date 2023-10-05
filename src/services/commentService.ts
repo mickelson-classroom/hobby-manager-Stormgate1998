@@ -12,6 +12,12 @@ export const commentService = {
       const response = await axios.get(url);
       return response.data;
     } catch (error) {
+      // Check if the error is a 404 error
+      if (axios.isAxiosError(error) && error.response?.status === 404) {
+        console.log('Comments not found for weaponId:', weaponId);
+        return []; // Return an empty array in case of a 404 error
+      }
+
       console.error('Error fetching comments:', error);
       throw error;
     }
