@@ -26,6 +26,8 @@ export const commentService = {
       console.error('Error adding comment:', error);
       throw error;
     }
+  }else{
+    console.log("empty id, did not submit")
   }
   
     },
