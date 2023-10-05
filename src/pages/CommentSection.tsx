@@ -68,7 +68,7 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
         });
 
         // Clear editable comment
-        setEditableComment(null);
+        setEditableComment({ id: '', weaponId, name: '', content: '' });
       } catch (error) {
         console.error('Error updating comment:', error);
       }
