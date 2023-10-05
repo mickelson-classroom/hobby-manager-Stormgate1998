@@ -36,20 +36,26 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
 
 
   const handleAddComment = async () => {
-    console.log(newComment)
-    try {
-      setNewComment({
-        id: Date.now().toString(), weaponId: newComment.weaponId, content: newComment.content, name: newComment.name
-      })
-      await commentService.addComment(newComment).then(() => console.log("added comment"));
-      // Refresh comments after adding
-      fetchComments();
-      // Reset the new comment form
-      setNewComment({ id: '', weaponId, name: '', content: '' });
-    } catch (error) {
-      console.error('Error adding comment:', error);
-    }
-  };
+  console.log(newComment);
+  try {
+    const updatedComment = {
+      id: Date.now().toString(),
+      weaponId: newComment.weaponId,
+      content: newComment.content,
+      name: newComment.name,
+    };
+console.log(newComment)
+    await commentService.addComment(updatedComment).then(() => console.log("added comment"));
+    
+    // Refresh comments after adding
+    fetchComments();
+
+    // Reset the new comment form
+    setNewComment({ id: '', weaponId, name: '', content: '' });
+  } catch (error) {
+    console.error('Error adding comment:', error);
+  }
+};
 
   const handleUpdateComment = async (commentToUpdate: Comment) => {
     try {
