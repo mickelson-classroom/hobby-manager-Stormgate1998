@@ -81,7 +81,7 @@ console.log(newComment)
     <div>
       <h2>Comments</h2>
       <ul>
-        {comments.map((comment) => (
+        {comments.length > 0 && comments.map((comment) => (
   <li key={comment.id}>
     <p>{comment.content}</p>
     <button className="btn btn-primary" onClick={() => handleUpdateComment(comment)}>
