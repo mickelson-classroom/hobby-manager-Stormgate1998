@@ -95,7 +95,7 @@ export const commentService = {
     const deletekey = existingComments[0].weaponId;
     console.log(deletekey)
     this.deleteComments(existingComments[0].weaponId);
-    const newList = existingComments.filter((c) => c.id !== id);
+    const newList = existingComments.filter((c) => c.weaponId !== id);
     console.log(newList)
     this.addComments(newList);
   }
