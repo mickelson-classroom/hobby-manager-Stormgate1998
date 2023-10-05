@@ -37,6 +37,10 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
 
   const handleAddComment = async () => {
     try {
+      setNewComment({
+        ...newComment,
+        id: Date.now().toString(),
+      })
       await commentService.addComment(newComment).then(() => console.log("added comment"));
       // Refresh comments after adding
       fetchComments();
