@@ -4,16 +4,17 @@ import { useParams } from "react-router-dom";
 import {Weapon} from "../../models/weapons";
 import { weapons } from "../../services/weaponService";
 import {WeaponContext, WeaponProvider} from "../../components/WeaponContext";
+import Comments from "../CommentSection";
 
 import { useAppDispatch, useAppSelector } from "../../features/hooks";
 import { updateWeapons, deleteWeapons} from "../../features/weapon-slice";
 import { ImageUploader } from "../../components/components/ImageUploader";
 export const WeaponDetailPage = () => {
-  const { weaponId } = useParams();
+  const { weaponId: weaponIdParam } = useParams();
   const [isEditing, SetisEditing] = useState(false);
   const [myimgUrl, setImgUrl] = useState("");
   const [weapon, setWeapon] = useState({
-    id: weaponId || "",
+    id: weaponIdParam || "",
     name: '',
     material: '',
     typeofDamage: '',
@@ -47,7 +48,7 @@ export const WeaponDetailPage = () => {
     dispatch(updateWeapons(newWeapon))
   }
  const {deleteWeapons} = useContext(WeaponContext);
-  const selectedWeapon = weapons.weapons.find((w) => w.id === weaponId);
+  const selectedWeapon = weapons.weapons.find((w) => w.id === weaponIdParam);
 
 
   const handleSubmit = (e: { preventDefault: () => void; }) => {
@@ -171,21 +172,23 @@ export const WeaponDetailPage = () => {
           Submit
         </button>
         </form>
+        
         </div>
         ) : (
            <>
            <div className="col-lg-3 col-md-4 col-sm-6 col-12 m-3">
         <div className="btn btn-primary btn-sm button-hover-animation m-3 " onClick={() =>{
-              if(weaponId){
+              if(weaponIdParam){
                 SetisEditing(true)
               }} }>Edit</div>
        <div className="btn btn-primary btn-sm button-hover-animation m-3"
        onClick={() => {
-        if(weaponId){
-          deleteWeapons(weaponId)
+        if(weaponIdParam){
+          deleteWeapons(weaponIdParam)
         }
         }}>Delete</div>
         </div>
+        <Comments weaponId={weaponIdParam || ""}/>
         </>
         )
         }
