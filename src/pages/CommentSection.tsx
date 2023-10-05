@@ -60,13 +60,14 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
   const handleUpdateComment = async () => {
     if (editableComment) {
       try {
-        await commentService.updateComment(editableComment).then(() => console.log("updated comment"));
+        await commentService.updateComment(editableComment).then(() => {
+          console.log("updated comment");
+          // Refresh comments after updating
+          fetchComments();
+        });
 
         // Clear editable comment
         setEditableComment(null);
-
-        // Refresh comments after updating
-        fetchComments();
       } catch (error) {
         console.error('Error updating comment:', error);
       }
@@ -75,9 +76,11 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
 
   const handleDeleteComment = async (commentId: string) => {
     try {
-      await commentService.deleteComment(commentId).then(() => console.log("deleted comment"));
-      // Refresh comments after deleting
-      fetchComments();
+      await commentService.deleteComment(commentId).then(() => {
+        console.log("deleted comment");
+        // Refresh comments after deleting
+        fetchComments();
+      });
     } catch (error) {
       console.error('Error deleting comment:', error);
     }
@@ -95,11 +98,11 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
                   <input
                     type="text"
                     value={editableComment.name}
-                    onChange={(e) => setEditableComment({ ...editableComment, name: e.target.value })}
+                    onChange={(e) => setEditableComment({ ...editableComment!, name: e.target.value, content: editableComment!.content })}
                   />
                   <textarea
                     value={editableComment.content}
-                    onChange={(e) => setEditableComment({ ...editableComment, content: e.target.value })}
+                    onChange={(e) => setEditableComment({ ...editableComment!, content: e.target.value, name: editableComment!.name })}
                   />
                   <button className="btn btn-primary" onClick={handleUpdateComment}>
                     Save
