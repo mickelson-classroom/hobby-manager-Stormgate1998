@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Comment } from "../models/comment";
-import { commentService } from '../services/commentService';
+import { commentService } from '../services/commentsApiService';
 
 interface CommentsProps {
   weaponId: string;
