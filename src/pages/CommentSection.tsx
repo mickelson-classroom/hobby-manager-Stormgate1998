@@ -36,6 +36,7 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
 
 
   const handleAddComment = async () => {
+    console.log(newComment)
     try {
       setNewComment({
         ...newComment,
