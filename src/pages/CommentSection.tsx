@@ -153,7 +153,8 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
         />
         <button className="btn btn-primary" onClick={() => {
           SetisWaiting(true)
-          handleAddComment}}>Add Comment</button>
+          handleAddComment()
+          }}>Add Comment</button>
       </div>
 
       { isWaiting && (
