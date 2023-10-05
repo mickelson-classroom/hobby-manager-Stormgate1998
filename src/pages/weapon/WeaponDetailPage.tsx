@@ -112,6 +112,7 @@ export const WeaponDetailPage = () => {
       <img src={selectedWeapon.imgUrl} className="img-fluid" alt="Selected Weapon" />
        </div>
        </div>
+       <Comments weaponId={weaponIdParam || ""}/>
         {isEditing ===true ? (
             <div className="container">
       <h2>New Weapon Form</h2>
@@ -188,7 +189,7 @@ export const WeaponDetailPage = () => {
         }
         }}>Delete</div>
         </div>
-        <Comments weaponId={weaponIdParam || ""}/>
+        
         </>
         )
         }
