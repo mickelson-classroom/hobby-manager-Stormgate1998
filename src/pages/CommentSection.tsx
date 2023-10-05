@@ -116,7 +116,7 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
                   <button className="btn btn-primary" onClick={() => setEditableComment(comment)}>
                     Edit
                   </button>
-                  <button className="btn btn-primary" onClick={() => handleDeleteComment(comment.id)}>
+                  <button className="btn btn-primary" onClick={() => handleDeleteComment(comment.weaponId)}>
                     Delete
                   </button>
                 </>
