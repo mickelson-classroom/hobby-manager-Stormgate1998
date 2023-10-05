@@ -136,7 +136,10 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
         )}
       </ul>
       <div>
-        <h3>Add a Comment</h3>
+        <h3>Add a Comment</h3>  
+        { isWaiting && (
+        <Spinner/>
+        )}
 
         <input
           className='form-control'
@@ -157,9 +160,7 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
           }}>Add Comment</button>
       </div>
 
-      { isWaiting && (
-        <Spinner/>
-        )}
+     
     </div>
   );
 };
