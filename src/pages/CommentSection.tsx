@@ -107,9 +107,10 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
                     onChange={(e) => setEditableComment({ ...editableComment, content: e.target.value, name: editableComment.name })}
                   />
                   <button className="btn btn-primary" onClick={() => {
-                    SetisWaiting(true)
-                    handleUpdateComment}}>
-                    Save
+                        SetisWaiting(true);
+                        handleUpdateComment();  // Invoke the function
+                  }}>
+                     Save
                   </button>
                 </>
               ) : (
@@ -120,10 +121,11 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
                     setEditableComment(comment)}}>
                     Edit
                   </button>
-                  <button className="btn btn-primary" onClick={() =>{
-                   SetisWaiting(true)
-                   handleDeleteComment(comment)}}>
-                    Delete
+                  <button className="btn btn-primary" onClick={() => {
+                      SetisWaiting(true);
+                      handleDeleteComment(comment);  // Pass the comment to the function
+                  }}>
+                   Delete
                   </button>
                 </>
               )}
