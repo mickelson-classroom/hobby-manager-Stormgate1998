@@ -25,7 +25,7 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
     if (Array.isArray(fetchedComments)) {
       setComments(fetchedComments);
     } else {
-      console.error('Invalid comments data:', fetchedComments);
+      setComments(fetchedComments[0]);
     }
 
     setNewComment({ id: '', weaponId, name: '', content: '' });

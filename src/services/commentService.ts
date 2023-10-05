@@ -18,11 +18,19 @@ export const commentService = {
   async addComment(comment: Comment) {
     if(comment.id != '' && comment.weaponId != ''){
       
-    try {
-      const url = baseURL + comment.weaponId;
-      const response = await axios.post(url, comment);
-      return response.data;
-    } catch (error) {
+   try {
+  // Fetch existing comments
+  const existingComments = await this.getComments(comment.weaponId) ?? [];
+
+  // Append the new comment to existing comments
+  existingComments.push(comment);
+
+  // Make a POST request with the updated comments
+  const response = await axios.post(baseURL, existingComments);
+
+  // Handle the response as needed
+  console.log('Response from POST:', response.data);
+} catch (error) {
       console.error('Error adding comment:', error);
       throw error;
     }
@@ -32,16 +40,28 @@ export const commentService = {
   
     },
   async updateComment(comment: Comment) {
-    try {
-      // Assuming deleteComment is correctly implemented
-      await this.deleteComment(comment.weaponId);
-      await this.addComment(comment);
-    } catch (error) {
-      console.error('Error updating comment:', error);
-      throw error;
+  try {
+    const existingComments = await this.getComments(comment.weaponId) ?? [];
+
+    // Find the index of the comment to be updated
+    const commentIndex = existingComments.findIndex((c) => c.id === comment.id);
+
+    if (commentIndex !== -1) {
+      // Replace the existing comment with the updated comment
+      existingComments[commentIndex] = comment;
+
+      // Delete existing comments and add the updated comments
+      await this.deleteComments(comment.weaponId);
+      await this.addComments(existingComments);
+    } else {
+      console.error('Comment not found for update.');
     }
-  },
-  async deleteComment(id: string) {
+  } catch (error) {
+    console.error('Error updating comment:', error);
+    throw error;
+  }
+},
+  async deleteComments(id: string) {
     try {
       const url = baseURL + id;
       const response = await axios.delete(url);
@@ -50,5 +70,24 @@ export const commentService = {
       console.error('Error deleting comment:', error);
       throw error;
     }
-  },
+  }, 
+  async addComments(comments: Comment[]) {
+   
+   try {
+        const response = await axios.post(baseURL, comments);
+
+  // Handle the response as needed
+        console.log('Response from POST:', response.data);
+      } catch (error) {
+      console.error('Error adding comment:', error);
+      throw error;
+    }
+  
+    },
+    async deleteComment(id: string) {
+      const existingComments = await this.getComments(id) ?? [];
+      this.deleteComments(existingComments[0].weaponId)
+      const newList = existingComments.filter((c) => c.id !== id)
+      this.addComments(newList)
+    }
 };
