@@ -75,9 +75,9 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
     }
   };
 
-  const handleDeleteComment = async (commentId: string) => {
+  const handleDeleteComment = async (comment: Comment) => {
     try {
-      await commentService.deleteComment(commentId).then(() => {
+      await commentService.deleteComment(comment).then(() => {
         console.log("deleted comment");
         // Refresh comments after deleting
         fetchComments();
@@ -116,7 +116,7 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
                   <button className="btn btn-primary" onClick={() => setEditableComment(comment)}>
                     Edit
                   </button>
-                  <button className="btn btn-primary" onClick={() => handleDeleteComment(comment.weaponId)}>
+                  <button className="btn btn-primary" onClick={() => handleDeleteComment(comment)}>
                     Delete
                   </button>
                 </>

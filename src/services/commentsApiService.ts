@@ -90,12 +90,12 @@ export const commentService = {
     }
 
   },
-  async deleteComment(id: string) {
-    const existingComments = await this.getComments(id) ?? [];
+  async deleteComment(comment: Comment) {
+    const existingComments = await this.getComments(comment.weaponId) ?? [];
     const deletekey = existingComments[0].weaponId;
     console.log(deletekey)
     this.deleteComments(existingComments[0].weaponId);
-    const newList = existingComments.filter((c) => c.weaponId !== id);
+    const newList = existingComments.filter((c) => c.id !== comment.id);
     console.log(newList)
     this.addComments(newList);
   }
