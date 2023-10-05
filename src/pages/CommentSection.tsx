@@ -10,6 +10,7 @@ interface CommentsProps {
 const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState<Comment>({ id: '', weaponId, name: '', content: '' });
+  const [editableComment, setEditableComment] = useState<Comment | null>(null);
 
   useEffect(() => {
     // Fetch comments when the component mounts
@@ -17,53 +18,58 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
   }, []);
 
   const fetchComments = async () => {
-  try {
-    console.log(weaponId);
-    const fetchedComments = await commentService.getComments(weaponId);
+    try {
+      console.log(weaponId);
+      const fetchedComments = await commentService.getComments(weaponId);
 
-    // Ensure that the fetched data is an array
-    if (Array.isArray(fetchedComments)) {
-      setComments(fetchedComments);
-    } else {
-      setComments(fetchedComments[0]);
+      // Ensure that the fetched data is an array
+      if (Array.isArray(fetchedComments)) {
+        setComments(fetchedComments);
+      } else {
+        setComments(fetchedComments[0]);
+      }
+
+      setNewComment({ id: '', weaponId, name: '', content: '' });
+    } catch (error) {
+      console.error('Error fetching comments:', error);
     }
-
-    setNewComment({ id: '', weaponId, name: '', content: '' });
-  } catch (error) {
-    console.error('Error fetching comments:', error);
-  }
-};
-
+  };
 
   const handleAddComment = async () => {
-  console.log(newComment);
-  try {
-    const updatedComment = {
-      id: Date.now().toString(),
-      weaponId: newComment.weaponId,
-      content: newComment.content,
-      name: newComment.name,
-    };
-console.log(newComment)
-    await commentService.addComment(updatedComment).then(() => console.log("added comment"));
-    
-    // Refresh comments after adding
-    fetchComments();
-
-    // Reset the new comment form
-    setNewComment({ id: '', weaponId, name: '', content: '' });
-  } catch (error) {
-    console.error('Error adding comment:', error);
-  }
-};
-
-  const handleUpdateComment = async (commentToUpdate: Comment) => {
+    console.log(newComment);
     try {
-      await commentService.updateComment(commentToUpdate).then(() => console.log("updated comment"));
-      // Refresh comments after updating
+      const updatedComment = {
+        id: Date.now().toString(),
+        weaponId: newComment.weaponId,
+        content: newComment.content,
+        name: newComment.name,
+      };
+      console.log(newComment);
+      await commentService.addComment(updatedComment).then(() => console.log("added comment"));
+
+      // Refresh comments after adding
       fetchComments();
+
+      // Reset the new comment form
+      setNewComment({ id: '', weaponId, name: '', content: '' });
     } catch (error) {
-      console.error('Error updating comment:', error);
+      console.error('Error adding comment:', error);
+    }
+  };
+
+  const handleUpdateComment = async () => {
+    if (editableComment) {
+      try {
+        await commentService.updateComment(editableComment).then(() => console.log("updated comment"));
+
+        // Clear editable comment
+        setEditableComment(null);
+
+        // Refresh comments after updating
+        fetchComments();
+      } catch (error) {
+        console.error('Error updating comment:', error);
+      }
     }
   };
 
@@ -77,28 +83,47 @@ console.log(newComment)
     }
   };
 
-return (
-  <div>
-    <h2>Comments</h2>
-    <ul>
-      {Array.isArray(comments) && comments.length > 0 ? (
-        comments.map((comment) => (
-          <li key={comment.id}>
-            <p>{comment.content}</p>
-            <button className="btn btn-primary" onClick={() => handleUpdateComment(comment)}>
-              Update
-            </button>
-            <button className="btn btn-primary" onClick={() => handleDeleteComment(comment.id)}>
-              Delete
-            </button>
-          </li>
-        ))
-      ) : (
-        <li>No comments available</li>
-      )}
-    </ul>
+  return (
     <div>
-       <h3>Add a Comment</h3>
+      <h2>Comments</h2>
+      <ul>
+        {Array.isArray(comments) && comments.length > 0 ? (
+          comments.map((comment) => (
+            <li key={comment.id}>
+              {editableComment === comment ? (
+                <>
+                  <input
+                    type="text"
+                    value={editableComment.name}
+                    onChange={(e) => setEditableComment({ ...editableComment, name: e.target.value })}
+                  />
+                  <textarea
+                    value={editableComment.content}
+                    onChange={(e) => setEditableComment({ ...editableComment, content: e.target.value })}
+                  />
+                  <button className="btn btn-primary" onClick={handleUpdateComment}>
+                    Save
+                  </button>
+                </>
+              ) : (
+                <>
+                  <p>{comment.content}</p>
+                  <button className="btn btn-primary" onClick={() => setEditableComment(comment)}>
+                    Edit
+                  </button>
+                  <button className="btn btn-primary" onClick={() => handleDeleteComment(comment.id)}>
+                    Delete
+                  </button>
+                </>
+              )}
+            </li>
+          ))
+        ) : (
+          <li>No comments available</li>
+        )}
+      </ul>
+      <div>
+        <h3>Add a Comment</h3>
 
         <input
           className='form-control'
@@ -114,9 +139,9 @@ return (
           onChange={(e) => setNewComment({ ...newComment, content: e.target.value })}
         />
         <button className="btn btn-primary" onClick={handleAddComment}>Add Comment</button>
+      </div>
     </div>
-  </div>
-);
+  );
 };
 
 export default Comments;
