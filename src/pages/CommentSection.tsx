@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Comment } from "../models/comment";
 import { commentService } from '../services/commentsApiService';
+import { Spinner } from '../services/Spinner';
 
 interface CommentsProps {
   weaponId: string;
@@ -11,7 +12,7 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState<Comment>({ id: '', weaponId, name: '', content: '' });
   const [editableComment, setEditableComment] = useState<Comment>({ id: '', weaponId, name: '', content: '' });
-  const [isEditing,SetisEditing] = useState(false)
+  const [isWaiting,SetisWaiting] = useState(false)
 
   useEffect(() => {
     // Fetch comments when the component mounts
@@ -29,7 +30,7 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
       } else {
         setComments(fetchedComments[0]);
       }
-
+      SetisWaiting(false)
       setNewComment({ id: '', weaponId, name: '', content: '' });
     } catch (error) {
       console.error('Error fetching comments:', error);
@@ -105,18 +106,23 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
                     value={editableComment.content}
                     onChange={(e) => setEditableComment({ ...editableComment, content: e.target.value, name: editableComment.name })}
                   />
-                  <button className="btn btn-primary" onClick={
-                    handleUpdateComment}>
+                  <button className="btn btn-primary" onClick={() => {
+                    SetisWaiting(true)
+                    handleUpdateComment}}>
                     Save
                   </button>
                 </>
               ) : (
                 <>
                   <p>{comment.content}</p>
-                  <button className="btn btn-primary" onClick={() => setEditableComment(comment)}>
+                  <button className="btn btn-primary" onClick={() => {
+                    SetisWaiting(true)
+                    setEditableComment(comment)}}>
                     Edit
                   </button>
-                  <button className="btn btn-primary" onClick={() => handleDeleteComment(comment)}>
+                  <button className="btn btn-primary" onClick={() =>{
+                   SetisWaiting(true)
+                   handleDeleteComment(comment)}}>
                     Delete
                   </button>
                 </>
@@ -143,8 +149,14 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
           value={newComment.content}
           onChange={(e) => setNewComment({ ...newComment, content: e.target.value })}
         />
-        <button className="btn btn-primary" onClick={handleAddComment}>Add Comment</button>
+        <button className="btn btn-primary" onClick={() => {
+          SetisWaiting(true)
+          handleAddComment}}>Add Comment</button>
       </div>
+
+      { isWaiting && (
+        <Spinner/>
+        )}
     </div>
   );
 };

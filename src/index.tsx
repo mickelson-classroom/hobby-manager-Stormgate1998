@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import "bootstrap";
 import "./assets/custom.scss";
+import "./services/spinner.scss";
 import { App } from './App';
 import { WeaponProvider } from './components/WeaponContext';
 import { store } from './store';
