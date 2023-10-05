@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Comment } from "../models/comment";
+import Comments from "../pages/CommentSection";
 
 const baseURL = 'https://joshbarlowsite.duckdns.org:3141/api/store?key=';
 
@@ -21,12 +22,8 @@ export const commentService = {
    try {
   // Fetch existing comments
 const existingComments = (await this.getComments(comment.weaponId)) || [];
-if(existingComments.length > 0){
+const newComments = existingComments.length > 0 ? [...existingComments, comment] : [comment];
 
-const newComments = [...existingComments, comment];
-}else{
-  const newComments = [comment]
-}
 // Make a POST request with the updated comments
 const response = await axios.post(baseURL, newComments);
 
