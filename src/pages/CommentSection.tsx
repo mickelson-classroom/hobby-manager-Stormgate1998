@@ -63,13 +63,18 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
     <div>
       <h2>Comments</h2>
       <ul>
-        {comments.map(comment => (
-          <li key={comment.id}>
-            <p>{comment.content}</p>
-            <button className="btn btn-primary" onClick={() => handleUpdateComment(comment)}>Update</button>
-            <button className="btn btn-primary" onClick={() => handleDeleteComment(comment.id)}>Delete</button>
-          </li>
-        ))}
+        {comments.map((comment) => (
+  <li key={comment.id}>
+    <p>{comment.content}</p>
+    <button className="btn btn-primary" onClick={() => handleUpdateComment(comment)}>
+      Update
+    </button>
+    <button className="btn btn-primary" onClick={() => handleDeleteComment(comment.id)}>
+      Delete
+    </button>
+  </li>
+))}
+
       </ul>
       <div>
         <h3>Add a Comment</h3>
