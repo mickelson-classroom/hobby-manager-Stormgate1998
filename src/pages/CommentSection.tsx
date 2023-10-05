@@ -10,7 +10,8 @@ interface CommentsProps {
 const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState<Comment>({ id: '', weaponId, name: '', content: '' });
-  const [editableComment, setEditableComment] = useState<Comment | null>(null);
+  const [editableComment, setEditableComment] = useState<Comment>({ id: '', weaponId, name: '', content: '' });
+  const [isEditing,SetisEditing] = useState(false)
 
   useEffect(() => {
     // Fetch comments when the component mounts
@@ -93,18 +94,19 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
         {Array.isArray(comments) && comments.length > 0 ? (
           comments.map((comment) => (
             <li key={comment.id}>
-              {editableComment === comment ? (
+              {editableComment.id === comment.id ? (
                 <>
                   <input
                     type="text"
                     value={editableComment.name}
-                    onChange={(e) => setEditableComment({ ...editableComment!, name: e.target.value, content: editableComment!.content })}
+                    onChange={(e) => setEditableComment({ ...editableComment, name: e.target.value, content: editableComment.content })}
                   />
                   <textarea
                     value={editableComment.content}
-                    onChange={(e) => setEditableComment({ ...editableComment!, content: e.target.value, name: editableComment!.name })}
+                    onChange={(e) => setEditableComment({ ...editableComment, content: e.target.value, name: editableComment.name })}
                   />
-                  <button className="btn btn-primary" onClick={handleUpdateComment}>
+                  <button className="btn btn-primary" onClick={
+                    handleUpdateComment}>
                     Save
                   </button>
                 </>
