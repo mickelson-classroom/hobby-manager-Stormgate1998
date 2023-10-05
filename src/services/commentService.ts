@@ -33,6 +33,7 @@ const newComments = existingComments.length > 0
   : [comment];
 
 // Make a POST request with the updated comments
+console.log(newComments)
 const response = await axios.post(baseURL, newComments);
 
 
