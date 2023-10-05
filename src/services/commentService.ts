@@ -16,6 +16,8 @@ export const commentService = {
     }
   },
   async addComment(comment: Comment) {
+    if(comment.id != '' && comment.weaponId != ''){
+      
     try {
       const url = baseURL + comment.weaponId;
       const response = await axios.post(url, comment);
@@ -24,7 +26,9 @@ export const commentService = {
       console.error('Error adding comment:', error);
       throw error;
     }
-  },
+  }
+  
+    },
   async updateComment(comment: Comment) {
     try {
       // Assuming deleteComment is correctly implemented
