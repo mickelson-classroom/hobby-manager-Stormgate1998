@@ -99,10 +99,12 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
                 <>
                   <input
                     type="text"
+                    className='form-control'
                     value={editableComment.name}
                     onChange={(e) => setEditableComment({ ...editableComment, name: e.target.value, content: editableComment.content })}
                   />
                   <textarea
+                  className='form-control'
                     value={editableComment.content}
                     onChange={(e) => setEditableComment({ ...editableComment, content: e.target.value, name: editableComment.name })}
                   />
