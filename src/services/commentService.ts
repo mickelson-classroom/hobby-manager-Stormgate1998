@@ -21,7 +21,12 @@ export const commentService = {
    try {
   // Fetch existing comments
 const existingComments = (await this.getComments(comment.weaponId)) || [];
+if(existingComments.length > 0){
+
 const newComments = [...existingComments, comment];
+}else{
+  const newComments = [comment]
+}
 // Make a POST request with the updated comments
 const response = await axios.post(baseURL, newComments);
 
