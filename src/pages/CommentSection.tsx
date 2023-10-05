@@ -77,11 +77,11 @@ console.log(newComment)
     }
   };
 
- return (
+return (
   <div>
     <h2>Comments</h2>
     <ul>
-      {comments.length > 0 ? (
+      {Array.isArray(comments) && comments.length > 0 ? (
         comments.map((comment) => (
           <li key={comment.id}>
             <p>{comment.content}</p>
