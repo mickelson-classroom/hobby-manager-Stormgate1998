@@ -33,7 +33,7 @@ export const commentService = {
 
         // Make a POST request with the updated comments
         console.log(newComments);
-        const response = await axios.post(baseURL, newComments);
+        const response = await axios.post(baseURL+newComments[0].weaponId, newComments);
 
         // Handle the response as needed
         console.log('Response from POST:', response.data);
