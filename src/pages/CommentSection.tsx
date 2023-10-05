@@ -98,8 +98,22 @@ return (
       )}
     </ul>
     <div>
-      <h3>Add a Comment</h3>
-      {/* ... (previous code) */}
+       <h3>Add a Comment</h3>
+
+        <input
+          className='form-control'
+          type="text"
+          placeholder="Your Name"
+          value={newComment.name}
+          onChange={(e) => setNewComment({ ...newComment, name: e.target.value })}
+        />
+        <textarea
+          className='form-control'
+          placeholder="Your Comment"
+          value={newComment.content}
+          onChange={(e) => setNewComment({ ...newComment, content: e.target.value })}
+        />
+        <button className="btn btn-primary" onClick={handleAddComment}>Add Comment</button>
     </div>
   </div>
 );
