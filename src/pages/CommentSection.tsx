@@ -17,15 +17,23 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
   }, []);
 
   const fetchComments = async () => {
-    try {
-      console.log(weaponId)
-      const fetchedComments = await commentService.getComments(weaponId);
+  try {
+    console.log(weaponId);
+    const fetchedComments = await commentService.getComments(weaponId);
+
+    // Ensure that the fetched data is an array
+    if (Array.isArray(fetchedComments)) {
       setComments(fetchedComments);
-      setNewComment({ id: '', weaponId, name: '', content: '' })
-    } catch (error) {
-      console.error('Error fetching comments:', error);
+    } else {
+      console.error('Invalid comments data:', fetchedComments);
     }
-  };
+
+    setNewComment({ id: '', weaponId, name: '', content: '' });
+  } catch (error) {
+    console.error('Error fetching comments:', error);
+  }
+};
+
 
   const handleAddComment = async () => {
     try {
