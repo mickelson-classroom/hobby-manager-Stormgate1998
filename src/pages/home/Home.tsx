@@ -3,15 +3,19 @@ import { Weapon } from "../../models/weapons";
 import { Link } from "react-router-dom";
 import Navbar from "../NavBar";
 import { useAppDispatch, useAppSelector } from "../../features/hooks";
-import { saveWeapons } from "../../features/weapon-slice";
+import {addWeaponsThunk} from "../../features/weapon-slice";
 import { useFormControl } from "../../components/components/FormHook";
 import { GenericInput } from "../../components/components/GenericInput";
 import { ImageUploader } from "../../components/components/ImageUploader";
+import { Spinner } from "../../services/Spinner";
 export const Home = () => {
   const weapons = useAppSelector((state) => state.weapon);
   const dispatch = useAppDispatch();
-  const saveNewWeapon = (e: { target: Weapon }) => {
-    dispatch(saveWeapons(e.target));
+  const loading = useAppSelector((s) => s.weapon.loading)
+  const saveNewWeapon = async (e: { target: Weapon }) => {
+    const newWeapon: Weapon = e.target ?? {name: "", material: "", };
+    dispatch(addWeaponsThunk(newWeapon));
+    console.log("done")
   };
 
   // Use GenericInput for each form input
@@ -27,6 +31,9 @@ export const Home = () => {
       <Navbar />
       <div className="container">
         <h1 className="text-success">Home Page</h1>
+        { loading && (
+        <Spinner/>
+        )}
         <div className="d-flex flex-wrap">
           {weapons.weapons.map((w) => (
             <Link key={w.id} className="card m-3" to={`/weapon/${w.id}`}>
@@ -41,13 +48,14 @@ export const Home = () => {
         </div>
         <div className="container">
           <h2>New Weapon Form</h2>
-          <form onSubmit={(e) => e.preventDefault()}>
+          <form onSubmit={(e) => e.preventDefault()} className="form-control" >
             <GenericInput
               label="Name"
               valid_feedback="Looks good!"
               invalid_feeback="Please enter a name"
               isValid={nameInput.value !== ""}
               onChange={nameInput.setValue}
+              
             />
             <GenericInput
               label="Material"
@@ -73,6 +81,7 @@ export const Home = () => {
             <ImageUploader setBase64Image={setImgInput}></ImageUploader>
             <button
               type="submit"
+              disabled= {!loading}
               className="btn btn-primary button-hover-animation logo"
               onClick={() =>
                 saveNewWeapon({

@@ -7,8 +7,9 @@ import {WeaponContext, WeaponProvider} from "../../components/WeaponContext";
 import Comments from "../CommentSection";
 
 import { useAppDispatch, useAppSelector } from "../../features/hooks";
-import { updateWeapons, deleteWeapons} from "../../features/weapon-slice";
+import { deleteWeaponsThunk, setLoading, updateWeaponsThunk } from "../../features/weapon-slice";
 import { ImageUploader } from "../../components/components/ImageUploader";
+import { Spinner } from "../../services/Spinner";
 export const WeaponDetailPage = () => {
   const { weaponId: weaponIdParam } = useParams();
   const [isEditing, SetisEditing] = useState(false);
@@ -29,6 +30,7 @@ export const WeaponDetailPage = () => {
 
 
   const weapons =  useAppSelector((state) => state.weapon);
+  const loading = useAppSelector((s) => s.weapon.loading)
   const dispatch = useAppDispatch();
   const changeWeapon = (e: { target: {id: string,
     name: string,
@@ -45,9 +47,8 @@ export const WeaponDetailPage = () => {
         range: e.target.range,
         imgUrl: myimgUrl,
       }
-    dispatch(updateWeapons(newWeapon))
+    dispatch(updateWeaponsThunk(newWeapon))
   }
- const {deleteWeapons} = useContext(WeaponContext);
   const selectedWeapon = weapons.weapons.find((w) => w.id === weaponIdParam);
 
 
@@ -81,6 +82,10 @@ export const WeaponDetailPage = () => {
       [name]: value,
     });
   };
+  const deleteWeapon=(id: string) => {
+    const newWeapon: Weapon = weapons.weapons.find(w => w.id === id) ?? weapons.weapons[0]
+    dispatch(deleteWeaponsThunk(newWeapon))
+  }
   useEffect(()=>{
  console.log(myimgUrl)
   },[myimgUrl])
@@ -88,6 +93,9 @@ export const WeaponDetailPage = () => {
     <div>
       <Navbar/>
       <h1 className="text-success">Weapon Detail Page</h1>
+      { loading && (
+        <Spinner/>
+        )}
      {selectedWeapon &&
      <>
      <div className="row">
@@ -169,7 +177,7 @@ export const WeaponDetailPage = () => {
            <ImageUploader setBase64Image={setImgUrl}></ImageUploader>
         </div>
 
-        <button type="submit" className="btn btn-primary button-hover-animation m-3">
+        <button disabled= {!loading} type="submit" className="btn btn-primary button-hover-animation m-3">
           Submit
         </button>
         </form>
@@ -178,16 +186,17 @@ export const WeaponDetailPage = () => {
         ) : (
            <>
            <div className="col-lg-3 col-md-4 col-sm-6 col-12 m-3">
-        <div className="btn btn-primary btn-sm button-hover-animation m-3 " onClick={() =>{
+        <button className="btn btn-primary btn-sm button-hover-animation m-3 " disabled={!loading}  onClick={() =>{
               if(weaponIdParam){
                 SetisEditing(true)
-              }} }>Edit</div>
-       <div className="btn btn-primary btn-sm button-hover-animation m-3"
+              }} }>Edit</button>
+       <button className="btn btn-primary btn-sm button-hover-animation m-3"
        onClick={() => {
         if(weaponIdParam){
-          deleteWeapons(weaponIdParam)
+        deleteWeapon(weaponIdParam)
         }
-        }}>Delete</div>
+        }}
+        disabled={!loading}>Delete</button>
         <Comments weaponId={weaponIdParam || ""}/>
         </div>
         

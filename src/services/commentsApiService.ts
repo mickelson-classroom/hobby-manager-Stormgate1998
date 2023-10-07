@@ -1,6 +1,5 @@
 import axios from "axios";
 import { Comment } from "../models/comment";
-import Comments from "../pages/CommentSection";
 
 const baseURL = '/api/store?key=';
 
