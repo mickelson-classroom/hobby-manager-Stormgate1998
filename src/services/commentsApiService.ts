@@ -2,7 +2,7 @@ import axios from "axios";
 import { Comment } from "../models/comment";
 import Comments from "../pages/CommentSection";
 
-const baseURL = 'https://joshbarlowsite.duckdns.org:3141/api/store?key=';
+const baseURL = '/api/store?key=';
 
 export const commentService = {
   async getComments(weaponId: string): Promise<Comment[]> {
