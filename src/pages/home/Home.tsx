@@ -14,8 +14,7 @@ export const Home = () => {
   const loading = useAppSelector((s) => s.weapon.loading)
   const saveNewWeapon = async (e: { target: Weapon }) => {
     const newWeapon: Weapon = e.target ?? {name: "", material: "", };
-    dispatch(addWeaponsThunk(newWeapon));
-    console.log("done")
+    //dispatch(addWeaponsThunk(newWeapon))
   };
 
   // Use GenericInput for each form input

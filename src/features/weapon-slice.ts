@@ -58,7 +58,7 @@ export const initialState: WeaponState={
 // Create async thunk for saving weapons
 export const addWeaponsThunk = createAsyncThunk(
   'weapons/saveWeapons',
-   async (item: Weapon): Promise<Weapon[]>  => {
+   async (item: Weapon) => {
     console.log("beginning")
     await weaponAPIService.addWeapon(item)
     return await weaponAPIService.getWeapons()

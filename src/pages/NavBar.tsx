@@ -37,6 +37,13 @@ const Navbar: React.FC<NavbarProps> = () => {
             <h3 className="text-primary">The Toaster Oven</h3>
           </Link>
         </div>
+        <div className="nav-item">
+          <Link to="/tanstack" className="nav-link">
+            <div className="icon red-icon">
+            </div>
+            <h3 className="text-primary">TanStack Query</h3>
+          </Link>
+        </div>
       </div>
     </nav>
   );

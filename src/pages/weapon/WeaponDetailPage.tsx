@@ -23,7 +23,6 @@ export const WeaponDetailPage = () => {
     imgUrl: '',
   });
 
-
   useEffect(() => {
     console.log(weapon.imgUrl)
   },[weapon.imgUrl])
@@ -47,7 +46,7 @@ export const WeaponDetailPage = () => {
         range: e.target.range,
         imgUrl: myimgUrl,
       }
-    dispatch(updateWeaponsThunk(newWeapon))
+    //dispatch(updateWeaponsThunk(newWeapon))
   }
   const selectedWeapon = weapons.weapons.find((w) => w.id === weaponIdParam);
 
@@ -84,7 +83,7 @@ export const WeaponDetailPage = () => {
   };
   const deleteWeapon=(id: string) => {
     const newWeapon: Weapon = weapons.weapons.find(w => w.id === id) ?? weapons.weapons[0]
-    dispatch(deleteWeaponsThunk(newWeapon))
+    //dispatch(deleteWeaponsThunk(newWeapon))
   }
   useEffect(()=>{
  console.log(myimgUrl)

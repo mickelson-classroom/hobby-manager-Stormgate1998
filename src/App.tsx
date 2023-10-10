@@ -6,6 +6,15 @@ import { ErrorPage } from "./pages/error/error";
 import ErrorBoundary from "./pages/ErrorBoundary";
 import { ErrorFeedback } from "./pages/errorFeedback/errorFeedback";
 import {ToastPage} from "./pages/ToastPage"
+import { TanStackExampleCode } from "./pages/SampleTanStack";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from '@tanstack/react-query'
+
+const queryClient = new QueryClient()
+
 export const App = () => {
   const router = createBrowserRouter([
     {
@@ -24,12 +33,18 @@ export const App = () => {
       path: "/toast",
       element: <ToastPage />,
     },
+    {
+      path: "/tanstack",
+      element: <TanStackExampleCode />,
+    },
   ]);
   return (
+    <QueryClientProvider client={queryClient}>
     <ErrorBoundary fallback={<ErrorFeedback/>}>
     <div className="App">
       <RouterProvider router={router} />
     </div>
     </ErrorBoundary>
+    </QueryClientProvider>
   );
 };
