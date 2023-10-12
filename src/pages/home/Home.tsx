@@ -12,7 +12,8 @@ export const Home = () => {
   const weaponClient =  useGetWeaponsQuery();
   const addWeapon = useAddWeapon();
   const saveNewWeapon = async (e: { target: Weapon }) => {
-    const newWeapon: Weapon = e.target ?? {name: "", material: "", };
+    const newWeapon: Weapon = e.target;
+    newWeapon.id = Date.now().toString();
     addWeapon.mutate(newWeapon)
   };
 
