@@ -2,19 +2,18 @@ import React, { ChangeEvent, useContext, useState } from "react";
 import { Weapon } from "../../models/weapons";
 import { Link } from "react-router-dom";
 import Navbar from "../NavBar";
-import { useAppDispatch, useAppSelector } from "../../features/hooks";
-import {addWeaponsThunk} from "../../features/weapon-slice";
+import { useAddWeapon, useGetWeaponsQuery } from "../../features/hooks";
 import { useFormControl } from "../../components/components/FormHook";
 import { GenericInput } from "../../components/components/GenericInput";
 import { ImageUploader } from "../../components/components/ImageUploader";
 import { Spinner } from "../../services/Spinner";
 export const Home = () => {
-  const weapons = useAppSelector((state) => state.weapon);
-  const dispatch = useAppDispatch();
-  const loading = useAppSelector((s) => s.weapon.loading)
+
+  const weaponClient =  useGetWeaponsQuery();
+  const addWeapon = useAddWeapon();
   const saveNewWeapon = async (e: { target: Weapon }) => {
     const newWeapon: Weapon = e.target ?? {name: "", material: "", };
-    //dispatch(addWeaponsThunk(newWeapon))
+    addWeapon.mutate(newWeapon)
   };
 
   // Use GenericInput for each form input
@@ -24,17 +23,23 @@ export const Home = () => {
   const rangeInput = useFormControl<string>("");
   const [imgInput, setImgInput] = useState<string>("");
 
- 
+
+if(weaponClient.isError){
+  return <div>Error getting weapons</div>
+}
+ if(!weaponClient.data){
+  return <div></div>
+ }
   return (
     <>
       <Navbar />
       <div className="container">
         <h1 className="text-success">Home Page</h1>
-        { loading && (
+        { weaponClient.isLoading && (
         <Spinner/>
         )}
         <div className="d-flex flex-wrap">
-          {weapons.weapons.map((w) => (
+          {weaponClient.data.map((w) => (
             <Link key={w.id} className="card m-3" to={`/weapon/${w.id}`}>
               <div className="card-body">
                 <h5 className="card-title text-primary">{w.name}</h5>
@@ -80,7 +85,7 @@ export const Home = () => {
             <ImageUploader setBase64Image={setImgInput}></ImageUploader>
             <button
               type="submit"
-              disabled= {!loading}
+              disabled= {!weaponClient.isLoading}
               className="btn btn-primary button-hover-animation logo"
               onClick={() =>
                 saveNewWeapon({

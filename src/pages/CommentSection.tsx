@@ -3,39 +3,21 @@ import { Link } from 'react-router-dom';
 import { Comment } from "../models/comment";
 import { commentService } from '../services/commentsApiService';
 import { Spinner } from '../services/Spinner';
-
+import { QueryKey, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useAddComments, useDeleteComments, useEditComments, useGetCommentsQuery } from '../features/hooks';
 interface CommentsProps {
   weaponId: string;
 }
 
 const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
-  const [comments, setComments] = useState<Comment[]>([]);
+  const commentClient = useGetCommentsQuery(weaponId)
+  const addComment = useAddComments();
+  const deleteComment = useDeleteComments();
+  const editComment = useEditComments();
   const [newComment, setNewComment] = useState<Comment>({ id: '', weaponId, name: '', content: '' });
   const [editableComment, setEditableComment] = useState<Comment>({ id: '', weaponId, name: '', content: '' });
   const [isWaiting,SetisWaiting] = useState(false)
 
-  useEffect(() => {
-    // Fetch comments when the component mounts
-    fetchComments();
-  }, []);
-
-  const fetchComments = async () => {
-    try {
-      console.log(weaponId);
-      const fetchedComments = await commentService.getComments(weaponId);
-
-      // Ensure that the fetched data is an array
-      if (Array.isArray(fetchedComments)) {
-        setComments(fetchedComments);
-      } else {
-        setComments(fetchedComments[0]);
-      }
-      SetisWaiting(false)
-      setNewComment({ id: '', weaponId, name: '', content: '' });
-    } catch (error) {
-      console.error('Error fetching comments:', error);
-    }
-  };
 
   const handleAddComment = async () => {
     console.log(newComment);
@@ -49,9 +31,6 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
       console.log(newComment);
       await commentService.addComment(updatedComment).then(() => console.log("added comment"));
 
-      // Refresh comments after adding
-      fetchComments();
-
       // Reset the new comment form
       setNewComment({ id: '', weaponId, name: '', content: '' });
     } catch (error) {
@@ -61,39 +40,28 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
 
   const handleUpdateComment = async () => {
     if (editableComment) {
-      try {
-        await commentService.updateComment(editableComment).then(() => {
-          console.log("updated comment");
-          // Refresh comments after updating
-          fetchComments();
-        });
-
-        // Clear editable comment
-        setEditableComment({ id: '', weaponId, name: '', content: '' });
-      } catch (error) {
-        console.error('Error updating comment:', error);
-      }
+      addComment.mutateAsync(editableComment).then(() => {
+         setEditableComment({ id: '', weaponId, name: '', content: '' });
+      });
     }
   };
 
   const handleDeleteComment = async (comment: Comment) => {
-    try {
-      await commentService.deleteComment(comment).then(() => {
-        console.log("deleted comment");
-        // Refresh comments after deleting
-        fetchComments();
-      });
-    } catch (error) {
-      console.error('Error deleting comment:', error);
-    }
+    deleteComment.mutateAsync(comment);
   };
 
+  if(commentClient.isLoading){
+    return <Spinner/>
+  }
+  if(commentClient.isError){
+    return <h3>There has been an error retrieving comments</h3>
+  }
   return (
     <div>
       <h2>Comments</h2>
       <ul>
-        {Array.isArray(comments) && comments.length > 0 ? (
-          comments.map((comment) => (
+        {commentClient.data ? (
+          commentClient.data.map((comment) => (
             <li key={comment.id}>
               {editableComment.id === comment.id ? (
                 <>

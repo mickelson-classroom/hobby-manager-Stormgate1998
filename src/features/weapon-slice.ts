@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import { Weapon } from '../models/weapons';
 import { hammerName, swordName, wandName, staffName, bowName } from './filenames';
-import { weaponAPIService } from './weaponApiCalls';
+import { weaponAPIService } from '../services/weaponApiCalls';
 
 interface WeaponState {
     weapons: Weapon[],

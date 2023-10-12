@@ -6,8 +6,7 @@ import { weapons } from "../../services/weaponService";
 import {WeaponContext, WeaponProvider} from "../../components/WeaponContext";
 import Comments from "../CommentSection";
 
-import { useAppDispatch, useAppSelector } from "../../features/hooks";
-import { deleteWeaponsThunk, setLoading, updateWeaponsThunk } from "../../features/weapon-slice";
+import { useDeleteWeapon, useEditWeapon, useGetWeaponsQuery } from "../../features/hooks";
 import { ImageUploader } from "../../components/components/ImageUploader";
 import { Spinner } from "../../services/Spinner";
 export const WeaponDetailPage = () => {
@@ -27,10 +26,9 @@ export const WeaponDetailPage = () => {
     console.log(weapon.imgUrl)
   },[weapon.imgUrl])
 
-
-  const weapons =  useAppSelector((state) => state.weapon);
-  const loading = useAppSelector((s) => s.weapon.loading)
-  const dispatch = useAppDispatch();
+  const weaponClient =  useGetWeaponsQuery();
+  const editWeapon = useEditWeapon();
+  const deleteThisWeapon = useDeleteWeapon();
   const changeWeapon = (e: { target: {id: string,
     name: string,
     material: string,
@@ -46,27 +44,27 @@ export const WeaponDetailPage = () => {
         range: e.target.range,
         imgUrl: myimgUrl,
       }
-    //dispatch(updateWeaponsThunk(newWeapon))
+    editWeapon.mutateAsync(newWeapon);
   }
-  const selectedWeapon = weapons.weapons.find((w) => w.id === weaponIdParam);
+  const selectedWeapon = weaponClient.data?.find((w) => w.id === weaponIdParam);
 
 
   const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     if(weapon.material === ''){
-      weapon.material = weapons.weapons.find(w => w.id === weapon.id)?.material ?? ""
+      weapon.material = weaponClient.data?.find(w => w.id === weapon.id)?.material ?? ""
     }
     if(weapon.name === ''){
-      weapon.name = weapons.weapons.find(w => w.id === weapon.id)?.name ?? ""
+      weapon.name = weaponClient.data?.find(w => w.id === weapon.id)?.name ?? ""
     }
     if(weapon.range === ''){
-      weapon.range = weapons.weapons.find(w => w.id === weapon.id)?.range ?? ""
+      weapon.range = weaponClient.data?.find(w => w.id === weapon.id)?.range ?? ""
     }
     if(weapon.typeofDamage === ''){
-      weapon.typeofDamage = weapons.weapons.find(w => w.id === weapon.id)?.typeofDamage ?? ""
+      weapon.typeofDamage = weaponClient.data?.find(w => w.id === weapon.id)?.typeofDamage ?? ""
     }
     if(myimgUrl === ''){
-      setImgUrl(weapons.weapons.find(w => w.id === weapon.id)?.imgUrl ?? "")
+      setImgUrl(weaponClient.data?.find(w => w.id === weapon.id)?.imgUrl ?? "")
       weapon.imgUrl = myimgUrl;
     }
 
@@ -81,20 +79,34 @@ export const WeaponDetailPage = () => {
       [name]: value,
     });
   };
-  const deleteWeapon=(id: string) => {
-    const newWeapon: Weapon = weapons.weapons.find(w => w.id === id) ?? weapons.weapons[0]
-    //dispatch(deleteWeaponsThunk(newWeapon))
-  }
+  const usedeleteWeapon=(id: string) => {
+    const newWeapon: Weapon | undefined = weaponClient.data?.find(w => w.id === id)
+    if(newWeapon){
+      deleteThisWeapon.mutateAsync(weapon)
+    };
+  };
+
   useEffect(()=>{
  console.log(myimgUrl)
   },[myimgUrl])
+
+
+  if(weaponClient.isLoading){
+    return <Spinner/>
+  }
+  if(weaponClient.isError){
+    return <div>There has been an error retrieving the data</div>
+  }
+  if(!weaponClient.data){
+    return(
+      <></>
+    )
+  }
   return (
     <div>
       <Navbar/>
       <h1 className="text-success">Weapon Detail Page</h1>
-      { loading && (
-        <Spinner/>
-        )}
+      
      {selectedWeapon &&
      <>
      <div className="row">
@@ -176,7 +188,7 @@ export const WeaponDetailPage = () => {
            <ImageUploader setBase64Image={setImgUrl}></ImageUploader>
         </div>
 
-        <button disabled= {!loading} type="submit" className="btn btn-primary button-hover-animation m-3">
+        <button disabled= {!weaponClient.isLoading} type="submit" className="btn btn-primary button-hover-animation m-3">
           Submit
         </button>
         </form>
@@ -185,17 +197,18 @@ export const WeaponDetailPage = () => {
         ) : (
            <>
            <div className="col-lg-3 col-md-4 col-sm-6 col-12 m-3">
-        <button className="btn btn-primary btn-sm button-hover-animation m-3 " disabled={!loading}  onClick={() =>{
+        <button className="btn btn-primary btn-sm button-hover-animation m-3 " disabled={!weaponClient.isLoading}  onClick={() =>{
               if(weaponIdParam){
                 SetisEditing(true)
               }} }>Edit</button>
        <button className="btn btn-primary btn-sm button-hover-animation m-3"
        onClick={() => {
         if(weaponIdParam){
-        deleteWeapon(weaponIdParam)
+        usedeleteWeapon(weaponIdParam)
+        
         }
         }}
-        disabled={!loading}>Delete</button>
+        disabled={!weaponClient.isLoading}>Delete</button>
         <Comments weaponId={weaponIdParam || ""}/>
         </div>
         
