@@ -25,11 +25,61 @@ export const Home = () => {
 
 
 if(weaponClient.isError){
-  return <div>Error getting weapons</div>
+  return  <div className="container">
+          <h2>New Weapon Form</h2>
+          <form onSubmit={(e) => e.preventDefault()} className="form-control" >
+            <GenericInput
+              label="Name"
+              valid_feedback="Looks good!"
+              invalid_feeback="Please enter a name"
+              isValid={nameInput.value !== ""}
+              onChange={nameInput.setValue}
+              
+            />
+            <GenericInput
+              label="Material"
+              valid_feedback="Looks good!"
+              invalid_feeback="Please enter a material"
+              isValid={materialInput.value !== ""}
+              onChange={materialInput.setValue}
+            />
+            <GenericInput
+              label="Type of Damage"
+              valid_feedback="Looks good!"
+              invalid_feeback="Please enter a type of damage"
+              isValid={typeofDamageInput.value !== ""}
+              onChange={typeofDamageInput.setValue}
+            />
+            <GenericInput
+              label="Range"
+              valid_feedback="Looks good!"
+              invalid_feeback="Please enter a range"
+              isValid={rangeInput.value !== ""}
+              onChange={rangeInput.setValue}
+            />
+            <ImageUploader setBase64Image={setImgInput}></ImageUploader>
+            <button
+              type="submit"
+              disabled= {!weaponClient.isLoading}
+              className="btn btn-primary button-hover-animation logo"
+              onClick={() =>
+                saveNewWeapon({
+                  target: {
+                    id: "",
+                    name: nameInput.value,
+                    material: materialInput.value,
+                    typeofDamage: typeofDamageInput.value,
+                    range: rangeInput.value,
+                    imgUrl: imgInput,
+                  },
+                })
+              }
+            >
+              Submit
+            </button>
+          </form>
+        </div>
 }
- if(!weaponClient.data){
-  return <div></div>
- }
   return (
     <>
       <Navbar />
@@ -39,7 +89,7 @@ if(weaponClient.isError){
         <Spinner/>
         )}
         <div className="d-flex flex-wrap">
-          {weaponClient.data.map((w) => (
+          {weaponClient.data?.map((w) => (
             <Link key={w.id} className="card m-3" to={`/weapon/${w.id}`}>
               <div className="card-body">
                 <h5 className="card-title text-primary">{w.name}</h5>

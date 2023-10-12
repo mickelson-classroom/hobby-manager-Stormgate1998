@@ -4,7 +4,7 @@ import { Weapon } from '../models/weapons';
 import { Comment } from '../models/comment';
 import { weaponAPIService } from '../services/weaponApiCalls';
 
-const queryClient = useQueryClient();
+
 
 export const useGetCommentsQuery = (weaponId: string) => useQuery({
   queryKey: ["comments", weaponId],
@@ -15,6 +15,7 @@ export const useGetCommentsQuery = (weaponId: string) => useQuery({
 
 
 export const useAddComments = () => {
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (newComment: Comment) => {
             return await commentService.addComment(newComment)
@@ -26,6 +27,7 @@ export const useAddComments = () => {
 }
 
 export const useEditComments = () => {
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (newComment: Comment) => {
             return await commentService.updateComment(newComment)
@@ -37,6 +39,7 @@ export const useEditComments = () => {
 }
 
 export const useDeleteComments = () => {
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (newComment: Comment) => {
             return await commentService.deleteComment(newComment)
@@ -56,6 +59,7 @@ export const useGetWeaponsQuery = () => useQuery({
 });
 
 export const useAddWeapon = () => {
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (newWeapon: Weapon) => {
             return await weaponAPIService.addWeapon(newWeapon)
@@ -67,6 +71,7 @@ export const useAddWeapon = () => {
 }
 
 export const useEditWeapon = () => {
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (newWeapon: Weapon) => {
             return await weaponAPIService.updateWeapon(newWeapon)
@@ -78,6 +83,7 @@ export const useEditWeapon = () => {
 }
 
 export const useDeleteWeapon = () => {
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (newWeapon: Weapon) => {
             return await weaponAPIService.deleteWeapon(newWeapon)
