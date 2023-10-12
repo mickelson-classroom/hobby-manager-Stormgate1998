@@ -61,7 +61,7 @@ if(weaponClient.isError){
             <ImageUploader setBase64Image={setImgInput}></ImageUploader>
             <button
               type="submit"
-              disabled= {!weaponClient.isLoading}
+              // disabled= {!weaponClient.isLoading}
               className="btn btn-primary button-hover-animation logo"
               onClick={() =>
                 saveNewWeapon({
