@@ -188,7 +188,7 @@ export const WeaponDetailPage = () => {
            <ImageUploader setBase64Image={setImgUrl}></ImageUploader>
         </div>
 
-        <button disabled= {!weaponClient.isLoading} type="submit" className="btn btn-primary button-hover-animation m-3">
+        <button disabled= {weaponClient.isLoading} type="submit" className="btn btn-primary button-hover-animation m-3">
           Submit
         </button>
         </form>
@@ -197,7 +197,7 @@ export const WeaponDetailPage = () => {
         ) : (
            <>
            <div className="col-lg-3 col-md-4 col-sm-6 col-12 m-3">
-        <button className="btn btn-primary btn-sm button-hover-animation m-3 " disabled={!weaponClient.isLoading}  onClick={() =>{
+        <button className="btn btn-primary btn-sm button-hover-animation m-3 " disabled={weaponClient.isLoading}  onClick={() =>{
               if(weaponIdParam){
                 SetisEditing(true)
               }} }>Edit</button>
@@ -208,7 +208,7 @@ export const WeaponDetailPage = () => {
         
         }
         }}
-        disabled={!weaponClient.isLoading}>Delete</button>
+        disabled={weaponClient.isLoading}>Delete</button>
         <Comments weaponId={weaponIdParam || ""}/>
         </div>
         

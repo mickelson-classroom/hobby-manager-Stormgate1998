@@ -30,3 +30,4 @@ services:
     container_name: josh-storage-api
     volumes:
       - /home/josh/data/apiStorage:/app/storage
+    restart: unless-stopped
