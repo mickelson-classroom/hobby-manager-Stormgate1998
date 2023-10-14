@@ -10,11 +10,12 @@ export const useGetCommentsQuery = (weaponId: string) => useQuery({
   queryKey: ["comments", weaponId],
   queryFn: async () => {
    return await commentService.getComments(weaponId);
-  }
+  },
+  refetchInterval: 30000,
 });
 
 
-export const useAddComments = () => {
+export const useAddComments = (weaponId: string) => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (newComment: Comment) => {
@@ -26,7 +27,7 @@ export const useAddComments = () => {
     })
 }
 
-export const useEditComments = () => {
+export const useEditComments = (weaponId: string) => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (newComment: Comment) => {
@@ -55,7 +56,8 @@ export const useGetWeaponsQuery = () => useQuery({
   queryKey: ["weapons"],
   queryFn: async () => {
    return await weaponAPIService.getWeapons();
-  }
+  },
+  refetchInterval: 30000,
 });
 
 export const useAddWeapon = () => {

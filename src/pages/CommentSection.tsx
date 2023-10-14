@@ -11,9 +11,9 @@ interface CommentsProps {
 
 const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
   const commentClient = useGetCommentsQuery(weaponId)
-  const addComment = useAddComments();
+  const addComment = useAddComments(weaponId);
   const deleteComment = useDeleteComments();
-  const editComment = useEditComments();
+  const editComment = useEditComments(weaponId);
   const [newComment, setNewComment] = useState<Comment>({ id: '', weaponId, name: '', content: '' });
   const [editableComment, setEditableComment] = useState<Comment>({ id: '', weaponId, name: '', content: '' });
   const [isWaiting,SetisWaiting] = useState(false)
