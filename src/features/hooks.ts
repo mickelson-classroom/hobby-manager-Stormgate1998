@@ -1,9 +1,18 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { QueryCache, QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { commentService } from '../services/commentsApiService';
 import { Weapon } from '../models/weapons';
 import { Comment } from '../models/comment';
 import { weaponAPIService } from '../services/weaponApiCalls';
+import toast from 'react-hot-toast';
 
+
+export const queryClient = new QueryClient({
+    queryCache: new QueryCache({
+        onError: (error) =>{
+            toast.error('Something went wrong: ${error.message}')
+        }
+    })
+})
 
 
 export const useGetCommentsQuery = (weaponId: string) => useQuery({
@@ -12,11 +21,12 @@ export const useGetCommentsQuery = (weaponId: string) => useQuery({
    return await commentService.getComments(weaponId);
   },
   refetchInterval: 30000,
+  useErrorBoundary: true,
+    
 });
 
 
 export const useAddComments = (weaponId: string) => {
-    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (newComment: Comment) => {
             return await commentService.addComment(newComment)
@@ -28,19 +38,17 @@ export const useAddComments = (weaponId: string) => {
 }
 
 export const useEditComments = (weaponId: string) => {
-    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (newComment: Comment) => {
             return await commentService.updateComment(newComment)
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(["comments"])
+            queryClient.invalidateQueries(["comments", weaponId])
         }
     })
 }
 
 export const useDeleteComments = () => {
-    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (newComment: Comment) => {
             return await commentService.deleteComment(newComment)
@@ -61,7 +69,6 @@ export const useGetWeaponsQuery = () => useQuery({
 });
 
 export const useAddWeapon = () => {
-    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (newWeapon: Weapon) => {
             return await weaponAPIService.addWeapon(newWeapon)
@@ -73,7 +80,7 @@ export const useAddWeapon = () => {
 }
 
 export const useEditWeapon = () => {
-    const queryClient = useQueryClient();
+    
     return useMutation({
         mutationFn: async (newWeapon: Weapon) => {
             return await weaponAPIService.updateWeapon(newWeapon)
@@ -82,10 +89,10 @@ export const useEditWeapon = () => {
             queryClient.invalidateQueries(["weapons"])
         }
     })
+
 }
 
 export const useDeleteWeapon = () => {
-    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (newWeapon: Weapon) => {
             return await weaponAPIService.deleteWeapon(newWeapon)
