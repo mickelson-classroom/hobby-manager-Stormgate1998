@@ -1,4 +1,4 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+import { Component, ErrorInfo, ReactNode } from 'react';
 
 interface ErrorBoundaryProps {
   fallback: ReactNode;
@@ -26,7 +26,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     //   in ErrorBoundary (created by App)
     //   in div (created by App)
     //   in App
-    console.error("Error was found");
+    console.error("Error was found:"+ error + info);
   }
 
   render() {

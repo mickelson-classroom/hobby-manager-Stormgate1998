@@ -1,8 +1,8 @@
 import axios from "axios";
 import {Weapon} from "../models/weapons"
-import { useDispatch } from 'react-redux';
-import { QueryKey, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 const baseURL = '/api/store?key=Weapons';
+
+const _testThing = ""
 export const weaponAPIService = {
   async getWeapons(): Promise<Weapon[]> {
     try {

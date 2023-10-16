@@ -22,7 +22,7 @@ const ToastList: React.FC<ToastListProps> = ({ data, position, removeToast }) =>
 
   useEffect(() => {
     handleScrolling(listRef.current);
-  }, [position, data]);
+  }, [position, data,  handleScrolling]);
 
   const sortedData = position.includes("bottom")
     ? [...data].reverse()

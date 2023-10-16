@@ -1,9 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import { Comment } from "../models/comment";
-import { commentService } from '../services/commentsApiService';
 import { Spinner } from '../services/Spinner';
-import { QueryKey, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAddComments, useDeleteComments, useEditComments, useGetCommentsQuery } from '../features/hooks';
 interface CommentsProps {
   weaponId: string;
@@ -11,7 +8,7 @@ interface CommentsProps {
 
 const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
   const commentClient = useGetCommentsQuery(weaponId)
-  const addComment = useAddComments(weaponId);
+  const addComment = useAddComments();
   const deleteComment = useDeleteComments();
   const editComment = useEditComments(weaponId);
   const [newComment, setNewComment] = useState<Comment>({ id: '', weaponId, name: '', content: '' });
@@ -29,7 +26,7 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
         name: newComment.name,
       };
       console.log(newComment);
-      await commentService.addComment(updatedComment).then(() => console.log("added comment"));
+      await addComment.mutateAsync(updatedComment).then(() => console.log("added comment"));
 
       // Reset the new comment form
       setNewComment({ id: '', weaponId, name: '', content: '' });
@@ -40,7 +37,7 @@ const Comments: React.FC<CommentsProps> = ({ weaponId }) => {
 
   const handleUpdateComment = async () => {
     if (editableComment) {
-      addComment.mutateAsync(editableComment).then(() => {
+      editComment.mutateAsync(editableComment).then(() => {
          setEditableComment({ id: '', weaponId, name: '', content: '' });
       });
     }

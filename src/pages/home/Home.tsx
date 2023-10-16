@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useContext, useState } from "react";
+import { useState } from "react";
 import { Weapon } from "../../models/weapons";
 import { Link } from "react-router-dom";
 import Navbar from "../NavBar";

@@ -1,5 +1,3 @@
-import { GenericInput } from "./GenericInput";
-import { GenericSelect } from "./GenericSelect";
 import React from "react";
 import { useState } from "react";
 

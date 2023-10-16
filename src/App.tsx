@@ -1,4 +1,3 @@
-import React from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Home } from "./pages/home/Home";
 import { WeaponDetailPage } from "./pages/weapon/WeaponDetailPage";
@@ -10,7 +9,6 @@ import { TanStackExampleCode } from "./pages/SampleTanStack";
 import {
   QueryClient,
   QueryClientProvider,
-  useQuery,
 } from '@tanstack/react-query'
 
 const queryClient = new QueryClient()

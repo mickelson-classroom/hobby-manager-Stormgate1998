@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface GenericSelectProps<T> {
   valid_feedback: string;
@@ -21,7 +21,7 @@ export const GenericSelect = <T extends {}>({
 
   useEffect(() => {
     onChange(selectedOption as T);
-  }, [selectedOption]);
+  }, [selectedOption, onChange]);
 
   return (
     <>

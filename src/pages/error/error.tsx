@@ -1,5 +1,3 @@
-import React, { useState } from 'react';
-import ErrorBoundary from '../ErrorBoundary';
 import Navbar from '../NavBar';
 
 export const ErrorPage = () => {

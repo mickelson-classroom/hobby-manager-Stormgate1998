@@ -21,8 +21,9 @@ export interface ToastObj {
 }
 
 // Create the Toast component
-const Toast: React.FC<ToastProps> = ({id, message, type, onClose }) => {
+const Toast: React.FC<ToastProps> = ({message, type, onClose }) => {
   // Define the icon mapping
+
   const iconMap: Record<string, React.ReactNode> = {
     ghost: <GhostIcon />,
     magic: <MagicIcon />,

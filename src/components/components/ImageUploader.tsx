@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 
 interface ImageUploaderProps {
   setBase64Image: (input: string) => void;
@@ -6,7 +6,6 @@ interface ImageUploaderProps {
 
 export const ImageUploader: React.FC<ImageUploaderProps> = ({ setBase64Image }) => {
   const [base64Image, setbase64Image] = useState<string>('');
-  const [base64Textarea, setBase64Textarea] = useState<string>('');
 
   const handleFileSelect = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -17,7 +16,6 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ setBase64Image }) 
       reader.onload = (loadEvent) => {
         const result = loadEvent.target?.result as string;
         setbase64Image(result);
-        setBase64Textarea(result);
         setBase64Image(result); // Notify the parent component with the base64 text
       };
 
@@ -32,7 +30,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ setBase64Image }) 
     <>
       <div className="">
         <input className="form-control m-3" type="file" id="fileInput" accept=".png" onChange={handleFileSelect} />
-       {base64Image && <img id="base64Image" alt="Base64 Image" style={{ maxWidth: '300px' }} src={base64Image} />
+       {base64Image && <img id="base64Image" alt="Base64 Stored" style={{ maxWidth: '300px' }} src={base64Image} />
 }
       </div>
     </>

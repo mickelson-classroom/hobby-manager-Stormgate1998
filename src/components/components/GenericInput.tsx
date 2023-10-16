@@ -6,7 +6,7 @@ export const GenericInput: FC<{ valid_feedback: string, invalid_feeback: string,
     const [titleInput, setTitleUserInput] = useState("");
     useEffect(() => {
         onChange(titleInput);
-    }, [titleInput]);
+    }, [titleInput, onChange]);
 
     return (
         <>

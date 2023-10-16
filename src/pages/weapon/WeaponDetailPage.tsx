@@ -1,9 +1,7 @@
-import React, { ChangeEvent, useContext, useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 import Navbar from "../NavBar";
 import { useParams } from "react-router-dom";
 import {Weapon} from "../../models/weapons";
-import { weapons } from "../../services/weaponService";
-import {WeaponContext, WeaponProvider} from "../../components/WeaponContext";
 import Comments from "../CommentSection";
 
 import { useDeleteWeapon, useEditWeapon, useGetWeaponsQuery } from "../../features/hooks";

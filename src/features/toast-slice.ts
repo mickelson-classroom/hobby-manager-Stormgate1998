@@ -1,6 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ToastObj} from '../components/Toaster/Toast';
-import { ToastProps } from '../components/Toaster/Toast';
 
 interface ToastState {
     toasts: ToastObj[],

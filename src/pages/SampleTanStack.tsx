@@ -1,17 +1,12 @@
 import {
-  QueryClient,
-  QueryClientProvider,
   useQuery,
 } from '@tanstack/react-query'
-import React, { ChangeEvent, useContext, useState } from "react";
-import { Link } from "react-router-dom";
+
 import Navbar from './NavBar';
+
 import { Spinner } from '../services/Spinner';
 
-const queryClient = new QueryClient();
-
 export const TanStackExampleCode = () => {
-    const [sampleThing, setSampleThing] = useState(false);
     const { isLoading, error, data } = useQuery({
     queryKey: ['repoData'],
     queryFn: () =>

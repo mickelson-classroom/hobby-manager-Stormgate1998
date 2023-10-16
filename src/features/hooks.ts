@@ -1,4 +1,4 @@
-import { QueryCache, QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { QueryCache, QueryClient, useMutation, useQuery} from '@tanstack/react-query';
 import { commentService } from '../services/commentsApiService';
 import { Weapon } from '../models/weapons';
 import { Comment } from '../models/comment';
@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 export const queryClient = new QueryClient({
     queryCache: new QueryCache({
         onError: (error) =>{
-            toast.error('Something went wrong: ${error.message}')
+            toast.error('Something went wrong:'+ {error})
         }
     })
 })
@@ -26,7 +26,7 @@ export const useGetCommentsQuery = (weaponId: string) => useQuery({
 });
 
 
-export const useAddComments = (weaponId: string) => {
+export const useAddComments = () => {
     return useMutation({
         mutationFn: async (newComment: Comment) => {
             return await commentService.addComment(newComment)

@@ -5,10 +5,6 @@ import { CommentIcon, GhostIcon, MagicIcon } from '../components/Icons/Icons';
 interface NavbarProps {}
 
 const Navbar: React.FC<NavbarProps> = () => {
-  const iconStyle = {
-    fontSize: '20px', // Adjust the size as needed
-    color: '', // Default color
-  };
 
   return (
     <nav className="navbar animated-fade-in">
