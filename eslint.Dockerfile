@@ -5,4 +5,4 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 
-CMD ["npx", "eslint", "src"]
+CMD ["npx", "eslint", "src", "--max-warnings=0"]
