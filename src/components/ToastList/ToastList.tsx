@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import Toast from "../Toaster/Toast";
 import { ToastObj } from "../Toaster/Toast";
 
@@ -11,14 +11,14 @@ interface ToastListProps {
 const ToastList: React.FC<ToastListProps> = ({ data, position, removeToast }) => {
   const listRef = useRef<HTMLDivElement | null>(null); // Specify the useRef type
 
-  const handleScrolling = (el: HTMLDivElement | null) => { // Specify the parameter type
-    const isTopPosition = ["top-left", "top-right"].includes(position);
-    if (isTopPosition) {
-      el?.scrollTo(0, el.scrollHeight);
-    } else {
-      el?.scrollTo(0, 0);
-    }
-  };
+  const handleScrolling = useCallback((el: HTMLDivElement | null) => {
+  const isTopPosition = ["top-left", "top-right"].includes(position);
+  if (isTopPosition) {
+    el?.scrollTo(0, el.scrollHeight);
+  } else {
+    el?.scrollTo(0, 0);
+  }
+}, [position]);
 
   useEffect(() => {
     handleScrolling(listRef.current);

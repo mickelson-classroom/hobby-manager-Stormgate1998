@@ -5,7 +5,6 @@ import { getWeapons, weapons } from '../services/weaponService';
 import { useEffect, useState } from 'react';
 
 //export const WeaponContext = React.createContext<WeaponContextType | null>(null);
-const decoyThing = "aohew";
 interface WeaponContext {
   weapons: Weapon[];
   saveWeapons: (weapon: Weapon) => void;
