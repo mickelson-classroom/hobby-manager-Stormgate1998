@@ -1,16 +1,19 @@
 name: Build Josh Hobby App
-env: 
+env:
   DUCKDNSTOKEN: ${{ secrets.DUCKDNSTOKEN }}
 on: [push, workflow_dispatch]
 jobs:
   deploy-application:
-    runs-on: [ self-hosted ]
+    runs-on: [self-hosted]
     steps:
       - name: checkout repo
         uses: actions/checkout@v2
 
       - name: redeploy application
         run: |
+          docker build -t josh_eslint -f eslint.Dockerfile .
+          docker run -i --rm josh_eslint
+
           docker compose down
           docker compose pull
           docker compose build
